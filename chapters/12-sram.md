@@ -24,7 +24,7 @@ routeAlias: ch12
 
 # Six-transistor Bitcell
 
-<LocalDiagram src="sram-6t.svg" alt="Six transistor SRAM: left CMOS inverter is driven by QB and outputs Q; right inverter is driven by Q and outputs QB. Two access NMOS controlled by WL connect Q to BL and QB to BLB. PMOS sources connect to VDD, NMOS sources to VSS." tall />
+<LocalDiagram src="images/sram-6t.svg" alt="Six transistor SRAM: left CMOS inverter is driven by QB and outputs Q; right inverter is driven by Q and outputs QB. Two access NMOS controlled by WL connect Q to BL and QB to BLB. PMOS sources connect to VDD, NMOS sources to VSS." tall />
 
 <p class="caption">4T = cross-coupled CMOS inverters, 2T = access NMOS입니다. Bulk 연결은 생략했습니다. 기호 수준 교육 회로이며 소자 비율·치수·전압값은 가정하지 않습니다.</p>
 
@@ -49,7 +49,7 @@ Read 중 낮은 Q가 일시적으로 올라갈 수 있습니다. 과도하면 **
 
 # Write & Conceptual Timing
 
-<LocalDiagram src="sram-timing.svg" alt="Read: precharge bitlines with WL low, disable precharge, raise WL to develop a differential, then sense. Write Q=0: drive BL low and BLB high before raising WL, lower WL before releasing drivers." />
+<LocalDiagram src="images/sram-timing.svg" class="compact" alt="Read: precharge bitlines with WL low, disable precharge, raise WL to develop a differential, then sense. Write Q=0: drive BL low and BLB high before raising WL, lower WL before releasing drivers." />
 
 - Q←0 write: driver가 BL=0, BLB=1을 먼저 설정한 뒤 WL을 올립니다.
 - Q←1 write: BL=1, BLB=0으로 설정합니다.

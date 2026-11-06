@@ -25,12 +25,13 @@ for (const [i, file] of files.entries()) {
     assert(!aliases.has(alias), `Duplicate alias ${alias}`)
     aliases.add(alias)
   }
-  for (const [, asset] of source.matchAll(/<LocalDiagram src="([^"]+)"/g)) await access(`public/images/${asset}`)
+  for (const [, asset] of source.matchAll(/<LocalDiagram src="([^"]+)"/g)) await access(`public/${asset}`)
   const labs = [...source.matchAll(/^routeAlias: (lab-\S+)$/gm)].map(m => m[1])
   report.push({ file, alias: `ch${number}`, first, count: slideCount, labs })
   first += slideCount
 }
 for (const [, alias] of entry.matchAll(/<Link to="([^"]+)"/g)) assert(aliases.has(alias), `Broken TOC link ${alias}`)
+for (const [, asset] of entry.matchAll(/<LocalDiagram src="([^"]+)"/g)) await access(`public/${asset}`)
 assert.equal([...entry.matchAll(/class="toc-card"/g)].length, 12)
 await mkdir('output', { recursive: true })
 await writeFile('output/content-report.json', JSON.stringify({ total: first - 1, chapters: report, aliases: [...aliases] }, null, 2))

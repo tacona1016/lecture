@@ -17,17 +17,16 @@ npm run check:content
 npm run dev
 ```
 
-**최초 설치 제한:** 이 구현 환경은 npm registry 접근이 EACCES로 차단되어 lockfile을 생성하지 못했습니다.
-네트워크가 허용된 환경에서 `npm install`로 실제 `package-lock.json`을 생성하고,
-그 후 `npm ci`부터 검증하세요. Lockfile 생성·검증 전에는 배포 준비 완료 상태가 아닙니다.
-Workflow는 재현성을 위해 `npm ci`를 사용하며 lockfile이 반드시 함께 올라가야 합니다.
+`package-lock.json`을 포함하며 로컬과 CI 모두 `npm ci`로 검증했습니다.
+의존성 버전을 변경하지 않는 작업에서는 lockfile을 다시 생성할 필요가 없습니다.
+개발 명령은 현재 Slidev 53.1.0이 지원하는 `slidev`입니다. `--host`는 지원되지 않습니다.
 
 ```powershell
-npm install
 npm ci
 npm test
 npm run check:content
 npm run build
+npm run check:build
 npm run preview
 ```
 
@@ -61,6 +60,7 @@ npm run preview
 
 ```powershell
 npm run build -- --base /sample-repository/
+npm run check:build -- /sample-repository/
 npm run preview -- --base /sample-repository/
 ```
 
@@ -68,10 +68,11 @@ Preview가 표시하는 base URL로 접속하세요. 사용자 사이트 `<owner
 `scripts/pages-base.mjs`가 GitHub repository 환경변수에서 base를 계산합니다. 저장소 이름은 소스에 고정하지 않습니다.
 Diagram은 `import.meta.env.BASE_URL`을 사용하며 웹폰트나 이미지 CDN에 의존하지 않습니다.
 
-원격 저장소와 연결되지 않은 초기 폴더입니다. 이 작업에서는 Git 초기화·repository 생성·Push·공개 설정 변경·Pages 활성화를 수행하지 않았습니다.
-사용자가 확인할 순서는 다음과 같습니다.
+저장소는 [tacona1016/lecture](https://github.com/tacona1016/lecture), 기본 브랜치는 main입니다.
+이 저장소의 Pages base는 `/lecture/`이며, 사이트 주소는 https://tacona1016.github.io/lecture/ 입니다.
+새 저장소에 복사할 때는 다음 순서로 배포합니다.
 
-1. 위 최초 설치 명령으로 lockfile을 만들고 빌드·UI 검증을 완료합니다.
+1. `npm ci`로 설치하고 빌드·산출물·UI 검증을 완료합니다.
 2. 의도한 GitHub 저장소와 remote를 확인한 후 소스와 lockfile을 main에 업로드합니다.
 3. GitHub **Settings → Pages → Build and deployment → Source: GitHub Actions**를 선택합니다.
 4. `Deploy Slidev to GitHub Pages` 실행 성공과 제공된 실제 Pages URL을 확인합니다.
@@ -80,7 +81,9 @@ Workflow는 main push와 수동 실행에 반응하며 `npm ci` → 검사 → `
 Build job에는 contents read와 Pages metadata 조회를 위한 pages read를, deploy job에는 pages write와 id-token write를 부여합니다.
 Configure Pages의 자동 활성화는 꺼 두었으므로 Pages Source 설정은 사용자가 수행해야 합니다.
 공개 artifact는 `dist`만 포함합니다. Source의 speaker notes는 build에서 제외합니다.
-GitHub Actions가 실제 실패하면 `$gh-fix-ci`로 해당 run 로그를 조사하세요. 현재 원격 실행 결과는 없습니다.
+최초 Run은 코드 빌드에 성공했지만 Pages 미설정으로 Configure Pages가 `Not Found`를 반환했습니다.
+사용자가 Source를 GitHub Actions로 설정한 뒤 [Run #1의 attempt 2](https://github.com/tacona1016/lecture/actions/runs/42229136937/attempts/2)에서 Build와 Deploy 성공을 확인했습니다.
+이 결과는 initial commit의 배포 결과입니다. 후속 로컬 수정의 원격 검증 여부는 implementation-status와 최종 작업 보고를 확인하세요.
 
 ## Verification
 
@@ -88,6 +91,13 @@ GitHub Actions가 실제 실패하면 `$gh-fix-ci`로 해당 run 로그를 조�
 setup 경계/양·음 skew, hold 부호, K-map 16행, Gray 인접성,
 10-bit 입력열 1,024개의 Moore/Mealy 검출과 Pages base를 확인합니다.
 `npm run check:content`는 챕터 순서·장수·alias 고유성·목차 링크·로컬 SVG 참조를 검사합니다.
+`npm run check:build -- /lecture/`는 실제 index.html의 preload·script·CSS·favicon 참조 파일과 SPA fallback이 존재하는지 검사합니다.
+SVG의 `src`는 `images/gates.svg`처럼 public 기준 경로를 사용합니다. LocalDiagram이 base를 붙이며 Slidev preload도 같은 경로를 사용합니다.
+
+로컬 production build를 Playwright CLI로 검증했습니다. `/lecture/`에서 90장 × 두 해상도(1920×1080, 1366×768)를 검사했고,
+clipping·수식 오류·깨진 이미지·Mermaid 렌더링 오류·console error·실패 응답이 없었습니다.
+목차 12개 왕복과 실습 전 조합·키보드·Reset은 `/`와 `/lecture/`에서 모두 통과했습니다.
+실제 공개 URL의 브라우저 접속은 실행 환경의 `ERR_NETWORK_ACCESS_DENIED`로 확인하지 못했습니다.
 
 실제 브라우저 QA 절차는 [browser-qa.md](docs/browser-qa.md)에 있습니다.
 소스 검사나 SVG 단독 검사와 실제 Slidev 렌더링 결과를 구분해 보고합니다.

@@ -57,7 +57,7 @@ Gated D latch: $S=EN\cdot D$, $R=EN\cdot\overline D$로 SR의 금지 조합을 �
 
 # Transparency vs Sampling
 
-<LocalDiagram src="latch-ff.svg" alt="Ideal waveforms: enable high from t1 to t4 and t6 to t9; latch follows D while high; D flip-flop updates only at t1 and t6 rising edges" />
+<LocalDiagram src="images/latch-ff.svg" class="compact" alt="Ideal waveforms: enable high from t1 to t4 and t6 to t9; latch follows D while high; D flip-flop updates only at t1 and t6 rising edges" />
 
 - EN/CLK가 높은 동안 D가 바뀌면 latch Q는 따라갑니다.
 - FF Q는 표시된 상승 에지의 D만 저장합니다.
@@ -69,7 +69,7 @@ Gated D latch: $S=EN\cdot D$, $R=EN\cdot\overline D$로 SR의 금지 조합을 �
 
 # Setup, Hold & Clock-to-Q
 
-<LocalDiagram src="setup-window.svg" alt="D must be stable from t_edge minus setup to t_edge plus hold; Q may update after clock-to-Q delay" />
+<LocalDiagram src="images/setup-window.svg" alt="D must be stable from t_edge minus setup to t_edge plus hold; Q may update after clock-to-Q delay" />
 
 | Quantity | Requirement |
 | --- | --- |

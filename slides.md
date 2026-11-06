@@ -3,6 +3,8 @@ theme: default
 title: Logic Design Fundamentals
 info: Digital Logic to SRAM · 공개 교육용 디지털 논리설계 세미나
 author: Logic Design Seminar
+lang: ko
+favicon: /favicon.svg
 colorSchema: dark
 aspectRatio: 16/9
 canvasWidth: 980
@@ -13,8 +15,6 @@ fonts:
   provider: none
   sans: Malgun Gothic, Apple SD Gothic Neo, sans-serif
   mono: Consolas, monospace
-htmlAttrs:
-  lang: ko
 ---
 
 <div class="cover">
@@ -25,7 +25,7 @@ htmlAttrs:
   <Link to="toc" class="start-link">Start →</Link>
   <p class="cover-note">12 Chapters · 3 Interactive Labs<br>학부 고학년 및 주니어 디지털 설계 엔지니어를 위한 과정입니다.</p>
 </div>
-<LocalDiagram src="cover.svg" alt="Learning path from bits through gates, state and timing to SRAM" />
+<LocalDiagram src="images/cover.svg" alt="Learning path from bits through gates, state and timing to SRAM" />
 </div>
 
 ---

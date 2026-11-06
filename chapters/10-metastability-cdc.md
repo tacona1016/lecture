@@ -58,7 +58,7 @@ flowchart LR
 
 # An Illustrative Synchronizer Trace
 
-<LocalDiagram src="cdc.svg" alt="An asynchronous transition near destination edge E1 may leave FF1 uncertain; it resolves to one before E2 and FF2 samples one at E2 in this possible scenario" />
+<LocalDiagram src="images/cdc.svg" alt="An asynchronous transition near destination edge E1 may leave FF1 uncertain; it resolves to one before E2 and FF2 samples one at E2 in this possible scenario" />
 
 한 가능한 경우: E1 근처에서 입력이 변하고 FF1이 1로 해소되어 E2에서 FF2가 1을 받습니다.
 

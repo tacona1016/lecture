@@ -1,5 +1,75 @@
 # Implementation status
 
+## 현재 체크포인트 — CI 복구 및 실제 브라우저 검증
+
+2026-11-06 · 로컬 구현/검증 완료. 기존 원격 Run의 Build/Deploy 복구 완료. 사용자가 검증된 16개 파일의 원격 Commit·반영·재배포를 승인했습니다. 아래는 원격 반영 직전 검증 체크포인트이며, 후속 Run 결과는 배포 Workflow에서 확인합니다.
+
+### 완료된 작업
+
+- 저장소: `https://github.com/tacona1016/lecture.git`, 기본/작업 브랜치 main. 작업 시작 시 변경사항 없음.
+- Node 24.20.0 / npm 11.19.0 / Slidev 53.1.0 / Vue 3.5.22. CI와 로컬 버전 일치.
+- 실제 실패 Run: [42229136937 attempt 1](https://github.com/tacona1016/lecture/actions/runs/42229136937/attempts/1), build job의 Configure Pages 단계.
+- 오류: `Get Pages site failed ... Error: Not Found` / `HttpError: Not Found`.
+- npm ci, 논리/콘텐츠 검사, static build는 최초 CI에서도 성공했습니다. 설치·lockfile·Node 호환성 문제는 실패 원인이 아니었습니다.
+- 사용자가 Settings → Pages → Source를 GitHub Actions로 설정했다고 확인했습니다. 실패 job을 한 번 재실행했습니다.
+- [attempt 2](https://github.com/tacona1016/lecture/actions/runs/42229136937/attempts/2)에서 build/deploy 모두 success, artifact `github-pages` 업로드 성공.
+- Deploy 로그: `Reported success!`, `Evaluated environment url: https://tacona1016.github.io/lecture/`.
+- 실제 배포된 commit: `1d4cf1be13912196bdc56d78e62c7385e9849797` (initial). 아래 로컬 수정은 이 배포에 아직 포함되지 않았습니다.
+
+### 로컬 수정
+
+- LocalDiagram의 src를 `images/...`로 통일해 실제 img와 Slidev preload가 같은 base 경로를 쓰도록 수정했습니다. 실제 7건의 preload 404를 재현한 뒤 제거했습니다.
+- 로컬 favicon과 지원되는 `lang: ko` 설정을 적용해 외부 favicon 요청과 잘못된 HTML 언어 설정을 수정했습니다.
+- MUX/DEMUX는 좌우 배치, Mealy는 LR 방향으로 표시하고 latch/SRAM 파형 두 개의 높이를 제한했습니다. 실제 잘림이 있던 slide 20/43/56/86을 수정했습니다.
+- `check:build`를 추가해 index.html의 script/CSS/preload/favicon 참조와 404.html을 검증하고 CI build 직후 실행합니다. 수정 전 dist에서 누락된 `/lecture/cover.svg`를 잡고, 수정 후 18개 참조가 통과하는 것을 확인했습니다.
+- 챕터 순서·88장 교육 내용·3개 simulator 계산·의존성 버전·package-lock.json은 보존했습니다.
+- `Unknown argument: host`는 재현했으나 현재 dev script는 이미 `slidev`이므로 추가 변경하지 않았습니다.
+
+### 검증 결과
+
+| Check | Result |
+| --- | --- |
+| `npm ci` | PASS, 710 packages. 오프라인 캐시 설치와 일반 명령 모두 성공 |
+| `npm test` | PASS, 10 tests. Gate 24 / full adder 8 / 8-bit add 65,536 / timing / K-map / Gray / FSM / yield / Pages base |
+| `npm run check:content` | PASS, 12 chapters, 88 teaching slides, 90 total, 16 aliases |
+| `npm run build` | PASS, root build |
+| `npm run build -- --base /lecture/` | PASS, CI와 같은 notes 제외 build |
+| `npm run check:build` + prefix 검사 | PASS, 각 18개 실제 asset 참조 및 SPA fallback |
+| Playwright: 90장 × 2 해상도 | PASS, 180 screenshots. clipping 0, math errors 0, broken images 0, Mermaid errors 0, console errors 0, 실패 응답 0 |
+| Playwright: navigation, labs | PASS, root 및 prefix에서 각각 12개 TOC 왕복, 좌우 이동, gate 24조합, adder 8조합, timing 경계/양·음 skew, slider 6개 키보드, Reset |
+| `git diff --check` | PASS |
+| lockfile diff | 변경 없음 |
+| 기존 GitHub Actions build/deploy | PASS, initial commit의 attempt 2 |
+| 후속 로컬 수정 GitHub Actions | 이 체크포인트에서는 미검증, 승인 후 원격 반영/추적 진행 |
+| 로컬 Commit | 차단, `.git/index.lock: Permission denied` (.git 쓰기 제한) |
+| 공개 사이트 실제 browser 접속 | 차단, `net::ERR_NETWORK_ACCESS_DENIED` |
+
+산출물: `output/playwright/scan-final-report.txt`, `interactions-final-report.txt`, `interactions-root-report.txt`, `repair-1920-001.png`부터 `repair-1366-090.png`까지.
+Playwright CLI는 캐시/registry 경로를 output 내부로 설정하고 격리된 headless Chrome으로 실행했습니다. 환경에서 Chrome의 내부 sandbox와 GPU process 실행이 실패하여 테스트 세션에만 `chromiumSandbox: false`, `--disable-gpu`, `--in-process-gpu`를 사용했습니다. 사이트 코드나 OS 보안 설정은 변경하지 않았습니다.
+
+### 중단 시 재개 지점
+
+완료된 설치·논리 테스트·180장 화면 검사를 반복할 필요는 없습니다. 먼저 Git diff와 위 결과 파일이 유지되는지 확인하세요.
+현재 dist가 root build이면 최종 산출물은 아래 명령으로 `/lecture/`에 맞춥니다.
+
+```powershell
+npm run build -- --base /lecture/
+npm run check:build -- /lecture/
+git diff --check
+git status --short
+```
+
+최종 dist도 `/lecture/`로 복원하고 산출물 검사를 통과했습니다. 위 빌드는 dist가 바뀌지 않았다면 반복하지 않아도 됩니다.
+
+이번 수정 16개 파일만 stage/Commit하려 했으나 `.git/index.lock: Permission denied`로 중단됐습니다. index와 로컬 HEAD는 변경하지 못했습니다.
+이 환경의 .git 쓰기 제한을 변경하거나 우회하지 마세요. 사용자는 일반 터미널에서 Commit할 수 있으며, 원격 반영을 승인한 경우에는 연결된 GitHub 도구로 같은 수정안을 Commit할 수 있습니다.
+사용자가 이번 16개 파일의 원격 main 반영을 승인했습니다. 승인은 이 수정안에 한정됩니다.
+승인된 경우 대상 `tacona1016/lecture`의 main HEAD를 다시 확인하고 수정 Commit을 반영한 뒤 새 Actions Run의 build/deploy를 추적합니다.
+원격 shell network가 차단되어 gh 인증/조회는 실패했지만 연결된 GitHub 도구로 로그 조회와 기존 Run 재실행은 성공했습니다.
+Pages settings API는 연결 도구에서 지원하지 않아 설정 변경은 사용자가 직접 수행했습니다.
+
+## 최초 구현 기록 — 아래 차단/미완료 표시는 당시 상태입니다
+
 2026-11-06 · 콘텐츠/구현 코드 작성 및 의존성 없는 검증 완료. **설치·빌드·실제 Slidev UI 검증은 차단 상태입니다. 배포 준비 완료로 간주하지 마세요.**
 
 - 입력: AGENTS.md, CODEX_PROMPT.md, slidev-seminar 및 Playwright 스킬 전체 확인.

@@ -57,13 +57,26 @@ $$
 
 # MUX, DEMUX & Decoder
 
+<div class="two-col">
+<div>
+
 ```mermaid
 flowchart LR
   D["D0…D3"] --> M["4:1 MUX"] --> Y["Y"]
   S["S1,S0"] --> M
+```
+
+</div>
+<div>
+
+```mermaid
+flowchart LR
   X["X"] --> U["1:4 DEMUX"] --> O["Y0…Y3"]
   T["S1,S0"] --> U
 ```
+
+</div>
+</div>
 
 - **MUX:** 여러 입력 중 하나를 출력으로 선택합니다.
 - **DEMUX:** 입력 X를 선택한 출력에 전달하고 나머지는 0으로 둡니다.

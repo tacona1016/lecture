@@ -42,6 +42,7 @@ routeAlias: ch08
 
 ```mermaid
 stateDiagram-v2
+  direction LR
   [*] --> A
   A --> A: 0 / 0
   A --> B: 1 / 0

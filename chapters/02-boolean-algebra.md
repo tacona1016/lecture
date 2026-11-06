@@ -101,7 +101,7 @@ $$
 F=AB+A\overline B=A(B+\overline B)=A
 $$
 
-<LocalDiagram src="gates.svg" alt="A and B feed one AND; A and inverted B feed another AND; both outputs feed OR, equivalent to a wire carrying A" />
+<LocalDiagram src="images/gates.svg" alt="A and B feed one AND; A and inverted B feed another AND; both outputs feed OR, equivalent to a wire carrying A" />
 
 | AB | 00 | 01 | 10 | 11 |
 | --- | --- | --- | --- | --- |

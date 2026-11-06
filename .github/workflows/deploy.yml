@@ -36,6 +36,10 @@ jobs:
         env:
           BASE_PATH: ${{ steps.base.outputs.path }}
         run: npm run build -- --base "$BASE_PATH"
+      - name: Verify static assets under Pages base
+        env:
+          BASE_PATH: ${{ steps.base.outputs.path }}
+        run: npm run check:build -- "$BASE_PATH"
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
