@@ -1,0 +1,21 @@
+{
+  "name": "logic-design-seminar",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build --without-notes",
+    "preview": "node scripts/preview.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check:content": "node scripts/check-content.mjs"
+  },
+  "devDependencies": {
+    "@slidev/cli": "53.1.0",
+    "@slidev/theme-default": "0.25.0",
+    "vue": "3.5.22"
+  }
+}
