@@ -68,7 +68,8 @@ SRAM은 Hold·Read·Write의 일차 학습목표를 분리하기 위해 8장에�
 | 발표 도구 | Start, 목차 12개 왕복, chapter alias 직접/새로고침, Footer, 전체 화면, Overview, Presenter 전진/후진 PASS |
 | 렌더링 오류 | Console, network 404/실패 요청, 깨진 이미지, KaTeX/Mermaid/SVG 경계 오류 0 |
 | 공개 산출물 | dist 296 files · source note 12개 및 로컬 메모·Markdown·환경 파일 제외 확인; Presenter는 No notes |
-| 원격 | 로컬 검증 후 사용자가 Commit/main 반영/재배포 승인 · 이 원고는 반영 직전 체크포인트이며 새 Run과 공개 URL 결과는 최종 보고에서 확인 |
+| 원격 | [b73e882](https://github.com/tacona1016/lecture/commit/b73e882b148d65881a1f9ae1c809609f34245c43) main 반영, [Run 42378565373](https://github.com/tacona1016/lecture/actions/runs/42378565373)의 Build/Deploy 모두 success |
+| 공개 UI | Playwright에서 ERR_NETWORK_ACCESS_DENIED, 별도 web 도구에서도 접근 불가 · 환경 차단으로 미검증 |
 
 실제 Chrome을 Playwright CLI로 구동했습니다. 세 해상도는 1920×1080, 1366×768, 1280×720입니다.
 도구의 중간 선택자 오류는 보존된 숨김 슬라이드까지 찾은 것이 원인이었습니다. 현재 layout/lab으로 제한하고 미완료 corner 및 SRAM 단계 부분만 분리해 재개했습니다. 제품 오류인 Footer 클릭 방해와 여백 침범은 실제 CSS/배치 수정 후 같은 검사로 재검증했습니다.
@@ -112,6 +113,6 @@ SRAM은 Hold·Read·Write의 일차 학습목표를 분리하기 위해 8장에�
 
 ## 다음 우선순위
 
-1. 변경된 원고·화면 검토 및 명시 승인 후 remote main에 반영하고 Actions/Pages를 확인합니다.
+1. 원격 반영과 Actions/Pages 배포는 승인 후 완료했습니다. 공개 URL의 실제 UI 접속은 네트워크 허용 환경에서 확인해야 합니다. 배포 후 로컬에 보관한 최종 결과는 사용자의 세션 정리 요청에 따라 문서 Commit으로 저장합니다. 다음 세션은 [SESSION_HANDOFF.md](SESSION_HANDOFF.md)에서 시작합니다.
 2. 실제 교실의 프로젝터·브라우저에서 대비·한글 글꼴·발표 키보드를 확인합니다.
 3. 추가 교육 수요가 있으면 FSM/CDC trace 강조를 검토합니다. 신규 대형 simulator나 backend는 필요하지 않습니다.

@@ -1,6 +1,23 @@
 # Implementation status
 
-## Presenter-first 고도화 — 2026-11-07 로컬 완료 / 원격 반영 승인
+## 세션 마감 — 2026-11-08
+
+다음 세션의 시작 문서는 [SESSION_HANDOFF.md](SESSION_HANDOFF.md)입니다. 강의 기능은 b73e882로 이미 원격 반영·배포됐으며 이번 마감은 문서 3개(인수인계, 이 상태 기록, presenter-review의 최종 배포 결과)만 별도 Commit 대상으로 지정합니다. 이전에 로컬에만 보관한 배포 결과를 이번 사용자 요청에 따라 Git에 저장합니다. 기존 코드와 다른 변경은 보존합니다.
+
+마감 재검사: npm test 12/12 PASS, check:content 93장/37 alias PASS, `/lecture/` build PASS(4.77초), check:build 17개 참조 PASS. Lint는 script가 없어 미실행입니다. 기존 Playwright 결과는 보존했으며 문서만 수정해 UI 검사를 반복하지 않았습니다. 새 기능과 공개 설정 변경은 없습니다. 문서 Commit은 `[skip ci]`로 기능 재배포를 생략합니다.
+
+## Presenter-first 고도화 — 2026-11-08 최종 확인: main / Build / Deploy 성공
+
+승인된 35개 파일을 [Commit b73e882](https://github.com/tacona1016/lecture/commit/b73e882b148d65881a1f9ae1c809609f34245c43)로 main에 반영했습니다. [Actions Run 42378565373](https://github.com/tacona1016/lecture/actions/runs/42378565373)은 completed/success이며 build `128421148091`, deploy `128421246024` 모두 success입니다. main HEAD도 이 Commit과 일치합니다.
+
+- CI 실제 로그: npm ci 710 packages, tests 12/pass 12, 12 chapters/93 slides/37 aliases, `slidev build --without-notes --base /lecture/`, 17개 산출물 참조 검사 모두 성공.
+- Deploy 실제 로그: `2026-11-07T13:49:45.7441569Z Reported success!`, environment URL https://tacona1016.github.io/lecture/ .
+- 공개 URL 실제 Playwright 접속은 `net::ERR_NETWORK_ACCESS_DENIED`로 차단됐습니다. 별도 web 도구도 URL에 접근하지 못했습니다. 공개 화면 UI는 미검증이며 배포 성공과 구분합니다.
+- 구현·로컬 검증·원격 반영은 완료됐습니다. 남은 확인은 네트워크가 허용된 브라우저에서 위 사이트의 Footer `93`, 목차 12개, chapter alias 새로고침 및 실습을 확인하는 것입니다. 완료된 npm 설치/빌드/전체 화면 검사/Commit/Push를 재개 시 반복하지 마세요.
+- 원격 결과는 `output/presenter-deployment.json`과 `output/presenter-validation.json`에 저장했습니다. 배포 직후에는 이 단락과 presenter-review의 최종 결과를 로컬에만 보관했습니다. 이후 사용자의 세션 정리 요청에 따라 위 마감 문서 Commit에 포함합니다. 강의 산출물은 변경하지 않습니다.
+- 로컬 `.git`은 쓰기 제한으로 initial HEAD에 남아 있어 이미 원격 반영된 파일도 변경으로 표시됩니다. 원격 반영 실패로 오해해 재Push하거나 reset하지 마세요.
+
+아래는 반영 직전 체크포인트로 Commit에 포함된 기록입니다.
 
 - 기준: 현재 working tree의 90장. 이전 복구 변경을 포함한 40개 파일을 `output/presenter-baseline/`에 보존했습니다. 사용자가 검증 보고 후 이번 고도화의 Commit·main 반영·재배포를 명시 승인했습니다.
 - Phase A 완료: 90장 × 3해상도 = 270개 실제 화면 및 contact sheet 검토. 결과와 우선순위는 `docs/presenter-review.md`에 기록했습니다.
