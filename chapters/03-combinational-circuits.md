@@ -1,5 +1,6 @@
 ---
 routeAlias: ch03
+class: chapter-opening
 ---
 
 <ChapterHeader number="03" />
@@ -141,17 +142,27 @@ $$
 > 이 값은 계산 연습용입니다. 라이브러리·부하·배선·입력 slew를 반영한 측정값이 아닙니다.
 
 ---
+routeAlias: quiz-ch03
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Selection
+
+<QuizReveal :step="$clicks">
 
 1. 4:1 MUX에서 S=10, D0…D3=0,1,1,0이면 Y는 무엇인가요?
 2. Priority 입력이 0110이면 Valid와 code는 무엇인가요?
 3. MUX의 선택 신호와 데이터가 함께 바뀌면 항상 무글리치인가요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** Y=D2=1 / Valid=1, code=10 / 아닙니다.
 
+</template>
+<template #explanation>
+
 서로 다른 경로의 지연 때문에 과도 출력이 생길 수 있습니다. 안정된 진리표는 전이 중의 동작을 보장하지 않습니다.
 
-</div>
+</template>
+</QuizReveal>

@@ -1,6 +1,6 @@
 # Logic Design Fundamentals
 
-Digital Logic to SRAM · Slidev + Vue 3 기반 한국어 교육용 프레젠테이션입니다.
+Digital Logic to SRAM · 강의자가 회로 동작을 단계적으로 설명하는 Slidev + Vue 3 세미나입니다.
 영문 제목과 기술 용어, 한국어 설명으로 구성합니다. 각 챕터는 학습 목표·선수 지식·풀이 예제·검산을 포함합니다.
 
 현재 검증 상태와 제한은 [implementation-status](docs/implementation-status.md)에 기록합니다.
@@ -32,10 +32,14 @@ npm run preview
 
 기본 preview는 `http://127.0.0.1:4173/`입니다. 개발 화면의 Slidev 도구 모음에서 전체 화면과 Presenter를 사용할 수 있습니다.
 ←/→로 슬라이드를 이동하고, Tab/Space로 실습 버튼을 조작하세요. Timing 슬라이더는 Tab 후 화살표로 조절합니다.
+설명 순서가 있는 슬라이드는 Footer의 STEP을 확인합니다. ←는 직전 공개 상태를 복원합니다.
+12개 Quiz는 문제 → 정답 → 근거 순서입니다. Footer 중앙 Contents로 목차에 복귀합니다.
+공개 build의 Presenter Mode에는 노트가 없습니다. 별도 로컬 메모는 Git에서 제외된 `output/presenter-notes.md`에만 보관합니다.
 
 ## Course
 
-표지·3×4 클릭 목차와 88장의 교육 슬라이드, 총 90장입니다. 목차는 슬라이드 번호 대신 안정적인 alias를 사용합니다.
+표지·3×4 클릭 목차와 91장의 교육 슬라이드, 총 93장입니다. 목차는 슬라이드 번호 대신 안정적인 alias를 사용합니다.
+Setup 동작/수식과 SRAM Hold/Read/Write의 학습 목표를 분리해 기존 90장에서 3장을 추가했습니다.
 
 | Chapter | Slides | Landing alias |
 | --- | ---: | --- |
@@ -47,10 +51,10 @@ npm run preview
 | 06 Latches & Flip-Flops | 7 | ch06 |
 | 07 Sequential Circuits | 7 | ch07 |
 | 08 Finite State Machines (Moore & Mealy) | 7 | ch08 |
-| 09 Timing Constraints & Static Timing Analysis | 8 | ch09 |
+| 09 Timing Constraints & Static Timing Analysis | 9 | ch09 |
 | 10 Metastability & Clock Domain Crossing | 7 | ch10 |
 | 11 Control Unit & Microcode — Advanced / Elective | 7 | ch11 |
-| 12 SRAM Memory | 8 | ch12 |
+| 12 SRAM Memory | 10 | ch12 |
 
 11장은 선택 심화입니다. SRAM의 필수 선수 과정이 아닙니다.
 세 실습의 alias는 `lab-gates`, `lab-adder`, `lab-timing`입니다. 모두 브라우저에서 계산하며 Reset을 제공합니다.
@@ -90,14 +94,16 @@ Configure Pages의 자동 활성화는 꺼 두었으므로 Pages Source 설정�
 `npm test`는 24개 gate 조합, full adder 8조합, 8-bit 덧셈 65,536조합,
 setup 경계/양·음 skew, hold 부호, K-map 16행, Gray 인접성,
 10-bit 입력열 1,024개의 Moore/Mealy 검출과 Pages base를 확인합니다.
-`npm run check:content`는 챕터 순서·장수·alias 고유성·목차 링크·로컬 SVG 참조를 검사합니다.
+추가로 4-bit ripple의 512개 입력과 setup 타임라인의 64개 slider 끝값 조합을 검사합니다. 총 12개 테스트입니다.
+`npm run check:content`는 실제 Slidev parser로 빈 슬라이드·frontmatter 경로를 확인하며 챕터 순서·장수·alias 고유성·목차 링크·로컬 SVG 참조도 검사합니다.
 `npm run check:build -- /lecture/`는 실제 index.html의 preload·script·CSS·favicon 참조 파일과 SPA fallback이 존재하는지 검사합니다.
 SVG의 `src`는 `images/gates.svg`처럼 public 기준 경로를 사용합니다. LocalDiagram이 base를 붙이며 Slidev preload도 같은 경로를 사용합니다.
 
-로컬 production build를 Playwright CLI로 검증했습니다. `/lecture/`에서 90장 × 두 해상도(1920×1080, 1366×768)를 검사했고,
-clipping·수식 오류·깨진 이미지·Mermaid 렌더링 오류·console error·실패 응답이 없었습니다.
-목차 12개 왕복과 실습 전 조합·키보드·Reset은 `/`와 `/lecture/`에서 모두 통과했습니다.
-실제 공개 URL의 브라우저 접속은 실행 환경의 `ERR_NETWORK_ACCESS_DENIED`로 확인하지 못했습니다.
+로컬 production build를 Playwright CLI로 검증했습니다. `/lecture/`에서 93장 × 세 해상도(1920×1080, 1366×768, 1280×720)의
+초기/최종 상태 342개를 검사했습니다. 발견된 Footer 여백 침범은 수정 후 재검사했으며 수식·SVG·Mermaid·console·404 오류는 없습니다.
+목차 12개 왕복·alias 새로고침, 퀴즈/회로의 전진·후진 복원, 실습 전 조합·키보드·Reset·64개 timing corner를 확인했습니다.
+전체 화면·Overview·Presenter Mode도 확인했습니다. Before/After와 상세 범위는 [presenter-review](docs/presenter-review.md)에 있습니다.
+이 검증 기록은 원격 반영 전의 결과입니다. 배포 여부는 이 Commit의 [Actions Run](https://github.com/tacona1016/lecture/actions/workflows/deploy.yml)과 최종 작업 보고에서 별도로 확인하세요.
 
 실제 브라우저 QA 절차는 [browser-qa.md](docs/browser-qa.md)에 있습니다.
 소스 검사나 SVG 단독 검사와 실제 Slidev 렌더링 결과를 구분해 보고합니다.

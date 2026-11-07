@@ -1,5 +1,6 @@
 ---
 routeAlias: ch12
+class: chapter-opening
 ---
 
 <ChapterHeader number="12" />
@@ -29,25 +30,44 @@ routeAlias: ch12
 <p class="caption">4T = cross-coupled CMOS inverters, 2T = access NMOS입니다. Bulk 연결은 생략했습니다. 기호 수준 교육 회로이며 소자 비율·치수·전압값은 가정하지 않습니다.</p>
 
 ---
+routeAlias: op-sram-hold
+clicks: 2
+class: operation-slide
+---
 
-# Hold & Read
+# Hold: Isolate the Cell
 
-Q=0, QB=1을 저장한 경우입니다. BL/BLB는 complementary bitlines입니다.
+<SramOperation mode="hold" :step="$clicks" />
 
-| Phase | WL | BL / BLB | Cell behavior |
-| --- | --- | --- | --- |
-| Hold | 0 | cell에서 격리 | 전원이 유지되면 피드백으로 저장합니다. |
-| Precharge/equalize | 0 | 둘 다 VDD로 충전 | 차동 읽기를 준비합니다. |
-| Read develop | 1 | BL↓, BLB≈VDD | BL → access → pull-down 경로로 방전합니다. |
-| Sense / finish | 1→0 | 작은 차이를 증폭 | 출력 latch 후 WL을 내립니다. |
+<p class="model-note">SRAM은 전원 유지 중 refresh가 필요 없지만 volatile입니다. DRAM은 charge를 저장하며 refresh가 필요합니다.</p>
 
-Read 중 낮은 Q가 일시적으로 올라갈 수 있습니다. 과도하면 **read disturb**로 저장값이 바뀔 수 있습니다.
+---
+routeAlias: op-sram-read
+clicks: 4
+class: operation-slide
+---
 
-> SRAM은 전원 유지 중 refresh가 필요 없지만 volatile입니다. DRAM은 charge를 저장하며 refresh가 필요합니다.
+# Read: Develop a Differential
+
+<SramOperation mode="read" :step="$clicks" />
+
+<p class="model-note">Read disturb로 Q가 올라가 저장값이 바뀔 수 있습니다. Sense 후 WL을 내립니다.</p>
+
+---
+routeAlias: op-sram-write
+clicks: 4
+class: operation-slide
+---
+
+# Write: Flip the Stored State
+
+<SramOperation mode="write" :step="$clicks" />
+
+<p class="model-note">충분한 writeability를 가정합니다. Q←0은 BL=0, BLB=1이며, 그림은 반대인 Q←1 예입니다.</p>
 
 ---
 
-# Write & Conceptual Timing
+# Read / Write Phase Order
 
 <LocalDiagram src="images/sram-timing.svg" class="compact" alt="Read: precharge bitlines with WL low, disable precharge, raise WL to develop a differential, then sense. Write Q=0: drive BL low and BLB high before raising WL, lower WL before releasing drivers." />
 
@@ -55,7 +75,7 @@ Read 중 낮은 Q가 일시적으로 올라갈 수 있습니다. 과도하면 **
 - Q←1 write: BL=1, BLB=0으로 설정합니다.
 - WL을 내린 뒤 driver를 해제합니다. Precharge와 write drive의 충돌을 피합니다.
 
-> Illustrative phase 순서입니다. 실제 pulse width·sense 시점·non-overlap은 회로 조건으로 검증해야 합니다.
+<p class="model-note">Illustrative phase 순서입니다. 실제 pulse width·sense 시점·non-overlap은 회로 조건으로 검증해야 합니다.</p>
 
 ---
 
@@ -113,17 +133,27 @@ p를 $10^{-5}$로 낮추면 같은 N에서 약 98.98%입니다.
 > 이 확률은 연습용 가정이며 특정 공정의 측정 결과가 아닙니다.
 
 ---
+routeAlias: quiz-ch12
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Memory Model
+
+<QuizReveal :step="$clicks">
 
 1. Q=0 read에서 어느 bitline이 먼저 내려가나요?
 2. 왜 precharge 동안 WL을 낮게 두나요?
 3. Bit failure가 서로 상관되어도 $(1-p)^N$을 그대로 쓰나요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** BL입니다 / cell을 bitline 준비 과정에서 격리합니다 / 아닙니다.
 
+</template>
+<template #explanation>
+
 Cell → read/write peripheral → array의 세 수준을 구분하고, 각 단계의 가정과 실패 조건을 검증해야 합니다.
 
-</div>
+</template>
+</QuizReveal>

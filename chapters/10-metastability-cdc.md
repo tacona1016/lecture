@@ -1,5 +1,6 @@
 ---
 routeAlias: ch10
+class: chapter-opening
 ---
 
 <ChapterHeader number="10" />
@@ -99,17 +100,27 @@ Binary 0111→1000을 bit마다 독립 동기화하면 0000 같은 중간 조합
 Gray counter는 한 번의 **인접 증가**에 한 bit만 바뀝니다. FIFO pointer에는 각 bit의 동기화와 bus-skew/max-delay 제약이 함께 필요합니다.
 
 ---
+routeAlias: quiz-ch10
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Crossing
+
+<QuizReveal :step="$clicks">
 
 1. 2-FF 앞의 2 ns pulse를 period 10 ns의 목적지에서 반드시 받나요?
 2. 8-bit bus의 각 bit에 2-FF를 두면 원자적 전달이 되나요?
 3. Gray encoding만 적용하면 CDC 검증이 끝나나요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** 모두 아닙니다.
 
+</template>
+<template #explanation>
+
 Pulse는 누락될 수 있고, bus는 bits별 latency 차이로 손상될 수 있습니다. Gray도 source 전이, 동기화, 물리 제약, 소비 방식까지 검증해야 합니다.
 
-</div>
+</template>
+</QuizReveal>

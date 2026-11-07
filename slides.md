@@ -1,5 +1,6 @@
 ---
 theme: default
+layout: default
 title: Logic Design Fundamentals
 info: Digital Logic to SRAM · 공개 교육용 디지털 논리설계 세미나
 author: Logic Design Seminar
@@ -17,7 +18,7 @@ fonts:
   mono: Consolas, monospace
 ---
 
-<div class="cover">
+<div class="seminar-cover">
 <div>
   <div class="eyebrow">A circuit-first learning journey</div>
   <h1>Logic Design<br>Fundamentals</h1>

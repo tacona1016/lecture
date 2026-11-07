@@ -1,5 +1,6 @@
 ---
 routeAlias: ch07
+class: chapter-opening
 ---
 
 <ChapterHeader number="07" />
@@ -110,8 +111,14 @@ RST가 edge 3과 4 사이에서만 잠깐 1이 되면 동기 reset은 놓칠 수
 > 시프트 방향과 새 bit의 삽입 위치를 반드시 함께 적으세요.
 
 ---
+routeAlias: quiz-ch07
+clicks: 2
+class: quiz-slide
+---
 
 # Design & Check a Sequence
+
+<QuizReveal :step="$clicks">
 
 설계 절차: **명세 → 상태/폭 → 전이표 → 식 → reset → 검증**입니다.
 
@@ -119,10 +126,14 @@ RST가 edge 3과 4 사이에서만 잠깐 1이 되면 동기 reset은 놓칠 수
 2. 초기 Q=1010, serial_in=1인 right shift 결과는 무엇인가요?
 3. 비동기 reset이면 해제 시점도 timing과 무관한가요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** $D_0=Q_0$, $D_1=Q_1$ / 1101 / 아닙니다.
 
+</template>
+<template #explanation>
+
 상태 trace는 reset, enable 정지, wraparound 같은 경계 동작까지 포함해야 합니다.
 
-</div>
+</template>
+</QuizReveal>

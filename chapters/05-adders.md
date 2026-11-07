@@ -1,5 +1,6 @@
 ---
 routeAlias: ch05
+class: chapter-opening
 ---
 
 <ChapterHeader number="05" />
@@ -21,16 +22,20 @@ routeAlias: ch05
 <!-- Source: Harris & Harris, DDCA, 2nd ed., Ch. 5. Propagate uses XOR consistently. -->
 
 ---
+routeAlias: op-half-full
+clicks: 2
+class: operation-slide
+---
 
 # Half Adder → Full Adder
 
 Half adder: $S=A\oplus B$, $C=AB$입니다. Carry 입력은 없습니다.
 
-Full adder는 두 half adder와 OR로 만들 수 있습니다.
+A=1, B=1이면 정수 합은 2, 즉 **Carry=1, Sum=0**입니다.
 
-$$
-P=A\oplus B,\quad S=P\oplus C_{in},\quad C_{out}=AB+PC_{in}
-$$
+<div v-click="1">
+
+Full adder는 두 half adder와 OR로 만들 수 있습니다.
 
 ```mermaid
 flowchart LR
@@ -42,6 +47,15 @@ flowchart LR
   H2 -- P·Cin --> O
   O --> CO["Cout"]
 ```
+
+</div>
+<div v-click="2">
+
+$$
+P=A\oplus B,\quad S=P\oplus C_{in},\quad C_{out}=AB+PC_{in}
+$$
+
+</div>
 
 ---
 
@@ -62,6 +76,7 @@ flowchart LR
 
 ---
 routeAlias: lab-adder
+class: lab-slide
 ---
 
 # Full Adder Simulator
@@ -70,27 +85,20 @@ routeAlias: lab-adder
 
 <FullAdderSimulator />
 
-> A=B=1이면 Cin에 관계없이 carry를 생성합니다. A≠B이면 carry를 전달합니다.
-
+---
+routeAlias: op-ripple
+clicks: 6
+class: operation-slide
 ---
 
 # Four-bit Ripple Carry
 
-LSB부터 MSB로 $c_0\rightarrow c_1\rightarrow c_2\rightarrow c_3\rightarrow c_4$가 전달됩니다.
+<RippleCarryDemo :step="$clicks" />
 
-예: **0111 + 0001**, $c_0=0$입니다.
-
-| Bit i | Ai | Bi | ci | Si | ci+1 |
-| --- | --- | --- | --- | --- | --- |
-| 0 | 1 | 1 | 0 | 0 | 1 |
-| 1 | 1 | 0 | 1 | 0 | 1 |
-| 2 | 1 | 0 | 1 | 0 | 1 |
-| 3 | 0 | 0 | 1 | 1 | 0 |
-
-결과는 **1000**, carry $c_4=0$입니다. Signed로는 +7+1이므로 V=1입니다.
-
-> 출력이 안정되기 전에 중간 carry가 전파됩니다. 표는 안정 후 논리값입니다.
-
+---
+routeAlias: eq-carry
+clicks: 3
+class: equation-slide
 ---
 
 # Generate & Propagate
@@ -101,15 +109,28 @@ $$
 c_{i+1}=g_i+p_ic_i,\qquad S_i=p_i\oplus c_i
 $$
 
-$$
-\begin{aligned}
-c_1&=g_0+p_0c_0\\
-c_2&=g_1+p_1g_0+p_1p_0c_0\\
-c_3&=g_2+p_2g_1+p_2p_1g_0+p_2p_1p_0c_0
-\end{aligned}
-$$
+<div class="derivation">
 
-Carry lookahead는 이전 carry를 순서대로 기다리는 대신 식을 전개합니다.
+<div v-click="1">
+
+$$c_1=g_0+p_0c_0$$
+
+</div>
+<div v-click="2">
+
+$$c_2=g_1+p_1g_0+p_1p_0c_0$$
+
+</div>
+<div v-click="3">
+
+$$c_3=g_2+p_2g_1+p_2p_1g_0+p_2p_1p_0c_0$$
+
+</div>
+</div>
+
+<div class="carry-comparison"><span>Ripple: c₀ → c₁ → c₂</span><span>CLA: g₁,p₁,g₀,p₀,c₀ → c₂</span></div>
+
+Carry lookahead는 이전 carry를 순서대로 기다리는 대신 입력의 generate/propagate로 식을 전개합니다.
 
 > 넓은 AND/OR의 fan-in, 배선, 부하 비용이 있습니다. 실제 구현은 계층형이나 prefix 구조를 사용할 수 있습니다.
 
@@ -132,17 +153,27 @@ $$V=c_3\oplus c_4\quad\text{(4-bit)}$$
 앞선 0111+0001은 $c_3=1,c_4=0$이므로 V=1입니다.
 
 ---
+routeAlias: quiz-ch05
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Arithmetic
+
+<QuizReveal :step="$clicks">
 
 1. A=1, B=0일 때 Cin=1이면 Sum/Cout은 무엇인가요?
 2. 4-bit `1111 + 0001`에서 결과, unsigned carry, signed overflow를 구하세요.
 3. Lookahead가 모든 공정과 bit width에서 항상 더 빠른가요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** Sum=0, Cout=1 / 결과 0000, C=1, V=0 / 아닙니다.
 
+</template>
+<template #explanation>
+
 속도 비교는 매핑된 셀, 배선, 부하와 제약을 포함해야 합니다. 논리 깊이만으로 최종 지연을 단정하지 않습니다.
 
-</div>
+</template>
+</QuizReveal>

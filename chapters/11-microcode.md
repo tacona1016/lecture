@@ -1,5 +1,6 @@
 ---
 routeAlias: ch11
+class: chapter-opening
 ---
 
 <ChapterHeader number="11" elective />
@@ -105,17 +106,27 @@ Dispatch는 opcode=00→μ4, 10→μ2, 20→μ3입니다.
 > 한 bus를 여러 driver가 동시에 구동하지 않도록 제어 word의 상호배제 조건을 검증해야 합니다.
 
 ---
+routeAlias: quiz-ch11
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Control Sequence
+
+<QuizReveal :step="$clicks">
 
 1. μ0에서 IR load와 PC increment를 같은 edge에 수행해도 되는 이유는?
 2. 시작 A=FF에서 INC A를 한 번 수행하면?
 3. 위 toy ISA에서 microcoded control을 위해 반드시 SRAM이 필요한가요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** IR은 edge 직전 PC가 가리키는 ROM 값을 샘플합니다 / A=00, 8-bit modulo / 아닙니다. ROM control store도 가능합니다.
 
+</template>
+<template #explanation>
+
 Micro-operation의 동시 실행은 datapath 연결과 memory timing 가정 안에서만 유효합니다.
 
-</div>
+</template>
+</QuizReveal>

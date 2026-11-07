@@ -1,5 +1,6 @@
 ---
 routeAlias: ch08
+class: chapter-opening
 ---
 
 <ChapterHeader number="08" />
@@ -105,17 +106,27 @@ Moore 출력은 D 상태에 있는 동안 1입니다. Mealy의 C, X=1 조건을 
 > Moore가 무조건 glitch-free이거나 Mealy가 항상 한 cycle 빠르다고 일반화하지 마세요.
 
 ---
+routeAlias: quiz-ch08
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Machine
+
+<QuizReveal :step="$clicks">
 
 1. Moore의 D에서 X=0이면 왜 C로 이동하나요?
 2. 입력 `110101`의 어느 bit에서 101이 완성되나요?
 3. 3상태 Mealy를 binary로 인코딩할 때 최소 FF 수는 얼마인가요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** 검출 뒤 접미사 10이 남습니다 / 4번째와 6번째 / 2개입니다.
 
+</template>
+<template #explanation>
+
 미사용 binary 상태의 복구 동작도 설계해야 합니다. 모든 입력·상태 조합의 전이를 정의하세요.
 
-</div>
+</template>
+</QuizReveal>

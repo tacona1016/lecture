@@ -1,5 +1,6 @@
 ---
 routeAlias: ch01
+class: chapter-opening
 ---
 
 <ChapterHeader number="01" />
@@ -114,19 +115,29 @@ V=\overline{A_7\oplus B_7}\,(S_7\oplus A_7)
 $$
 
 ---
+routeAlias: quiz-ch01
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Representation
+
+<QuizReveal :step="$clicks">
 
 1. `1111 0110`의 unsigned 값과 signed 값은 무엇인가요?
 2. signed 4-bit `1010`을 8 bits로 확장하세요.
 3. 8-bit `0110 0100 + 0011 1100`에서 C와 V는 무엇인가요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** 246과 −10 / `1111 1010` (−6) / 결과 `1010 0000`, C=0, V=1입니다.
 
+</template>
+<template #explanation>
+
 $100+60=160$은 unsigned 범위 안이지만 signed 범위 밖입니다.
 
-</div>
+다음 회로를 읽기 전에 bit width, signedness, truncation 규칙을 먼저 적으세요.
 
-> 다음 회로를 읽기 전에 bit width, signedness, truncation 규칙을 먼저 적으세요.
+</template>
+</QuizReveal>

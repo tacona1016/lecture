@@ -1,5 +1,6 @@
 ---
 routeAlias: ch09
+class: chapter-opening
 ---
 
 <ChapterHeader number="09" />
@@ -41,6 +42,16 @@ $$skew=t_{capture}-t_{launch}$$
 > 모든 값은 ns입니다. 동일 주파수·동일 상승 에지·단일 cycle의 단순 교육 모델입니다.
 
 ---
+routeAlias: op-setup
+clicks: 7
+class: operation-slide
+---
+
+# Setup: Follow the Data
+
+<SetupWalkthrough :step="$clicks" />
+
+---
 
 # Setup: Latest Arrival
 
@@ -79,22 +90,20 @@ Arrival=8.0 ns, required=9.0 ns입니다.
 > 이는 이 경로의 setup 한계입니다. 다른 경로, hold, clock 파형과 corner를 포함한 회로 전체 한계가 아닙니다.
 
 ---
+routeAlias: op-hold
+clicks: 4
+class: operation-slide
+---
 
 # Hold: Earliest Arrival
 
-$U_h\ge0$는 hold uncertainty입니다. Setup의 max 지연을 재사용하지 않습니다.
+<HoldWalkthrough :step="$clicks" />
 
-$$
-Slack_h=T_{cq,min}+T_{comb,min}-(T_{hold}+skew+U_h)
-$$
+<div v-click="3" class="hold-equation">
 
-예: $T_{cq,min}=0.2$, $T_{comb,min}=0.3$, $T_{hold}=0.2$, skew=+0.4, $U_h=0.1$ ns입니다.
+$$Slack_h=T_{cq,min}+T_{comb,min}-(T_{hold}+skew+U_h)=-0.2\;ns$$
 
-$$Slack_h=0.2+0.3-(0.2+0.4+0.1)=\boxed{-0.2\;ns}$$
-
-너무 빨리 도착하므로 hold violation입니다. Period를 늘려도 이 식은 변하지 않습니다.
-
-> Min path에 지연을 추가하면 hold 개선이 가능하지만 setup에 미치는 영향도 다시 검사해야 합니다.
+</div>
 
 ---
 
@@ -115,26 +124,35 @@ Positive skew는 capture clock이 늦게 도착한다는 뜻입니다.
 
 ---
 routeAlias: lab-timing
+class: lab-slide
 ---
 
 # Setup Timing Simulator
 
-기본값에서 skew를 −0.5 ns와 −0.6 ns로 바꿔 경계를 비교하세요.
-
 <SetupTimingSimulator />
 
 ---
+routeAlias: quiz-ch09
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Timing
+
+<QuizReveal :step="$clicks">
 
 1. 기본값 Tclk=10, Tcq=1, Tcomb=7, Tsetup=1, U=0.5 ns에서 skew=−0.5 ns이면 slack은?
 2. 같은 조건에서 skew=−0.6 ns이면?
 3. Hold violation을 period 증가만으로 해결할 수 있나요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** 0 ns, 경계 PASS / −0.1 ns, VIOLATION / 이 동일 edge 모델에서는 불가능합니다.
 
+</template>
+<template #explanation>
+
 여유 0은 강인한 설계를 뜻하지 않습니다. 공정·전압·온도 및 분석 오차는 별도 모델링과 margin이 필요합니다.
 
-</div>
+</template>
+</QuizReveal>

@@ -1,5 +1,6 @@
 ---
 routeAlias: ch02
+class: chapter-opening
 ---
 
 <ChapterHeader number="02" />
@@ -112,6 +113,7 @@ $$
 
 ---
 routeAlias: lab-gates
+class: lab-slide
 ---
 
 # Logic Gate Simulator
@@ -121,19 +123,29 @@ routeAlias: lab-gates
 <LogicGateSimulator />
 
 ---
+routeAlias: quiz-ch02
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Logic
+
+<QuizReveal :step="$clicks">
 
 1. $\overline{A+BC}$를 입력 부정만 사용하는 식으로 바꾸세요.
 2. $A+\overline A B$를 간소화하세요.
 3. XOR와 OR가 다른 출력을 내는 입력은 무엇인가요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** $\overline A(\overline B+\overline C)$ / $A+B$ / A=B=1입니다.
 
+</template>
+<template #explanation>
+
 두 번째 식은 $(A+\overline A)(A+B)=A+B$로 증명할 수 있습니다.
 
-</div>
+간소화 뒤에는 입력 전 조합에서 원래 식과 같은지 확인하세요.
 
-> 간소화 뒤에는 입력 전 조합에서 원래 식과 같은지 확인하세요.
+</template>
+</QuizReveal>

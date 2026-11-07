@@ -1,5 +1,6 @@
 ---
 routeAlias: ch06
+class: chapter-opening
 ---
 
 <ChapterHeader number="06" />
@@ -54,16 +55,14 @@ Gated D latch: $S=EN\cdot D$, $R=EN\cdot\overline D$로 SR의 금지 조합을 �
 > Latch의 transparency는 구간이고 FF의 sampling은 에지입니다. 둘을 같은 저장 모델로 취급하지 않습니다.
 
 ---
+routeAlias: op-latch
+clicks: 4
+class: operation-slide
+---
 
 # Transparency vs Sampling
 
-<LocalDiagram src="images/latch-ff.svg" class="compact" alt="Ideal waveforms: enable high from t1 to t4 and t6 to t9; latch follows D while high; D flip-flop updates only at t1 and t6 rising edges" />
-
-- EN/CLK가 높은 동안 D가 바뀌면 latch Q는 따라갑니다.
-- FF Q는 표시된 상승 에지의 D만 저장합니다.
-- 초기 Q=0, setup/hold 충족, 전파 지연 0인 **이상적 파형**입니다.
-
-> 실제 FF Q는 에지 이후 clock-to-Q만큼 늦게 변합니다.
+<LatchWaveformDemo :step="$clicks" />
 
 ---
 
@@ -97,17 +96,27 @@ T FF: $Q^+=Q\oplus T$. JK는 J=K=1이면 토글합니다.
 > Enable을 만들려고 일반 AND로 clock을 자르면 glitch와 짧은 pulse가 생길 수 있습니다. 데이터 MUX 또는 검증된 clock-gating 구조를 사용합니다.
 
 ---
+routeAlias: quiz-ch06
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Storage Model
+
+<QuizReveal :step="$clicks">
 
 1. EN=1인 D latch에서 D가 0→1→0이면 Q는 어떻게 되나요?
 2. FF의 두 상승 에지 사이에서 D만 바뀌면 Q가 즉시 바뀌나요?
 3. Setup이 충족되면 hold도 자동으로 충족되나요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** 지연 뒤 0→1→0을 따릅니다 / 아닙니다 / 아닙니다.
 
+</template>
+<template #explanation>
+
 Setup은 늦게 도착하는 max 경로, hold는 너무 빨리 도착하는 min 경로와 관련됩니다. 9장에서 각각 계산합니다.
 
-</div>
+</template>
+</QuizReveal>

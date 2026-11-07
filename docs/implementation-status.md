@@ -1,6 +1,36 @@
 # Implementation status
 
-## 현재 체크포인트 — CI 복구 및 실제 브라우저 검증
+## Presenter-first 고도화 — 2026-11-07 로컬 완료 / 원격 반영 승인
+
+- 기준: 현재 working tree의 90장. 이전 복구 변경을 포함한 40개 파일을 `output/presenter-baseline/`에 보존했습니다. 사용자가 검증 보고 후 이번 고도화의 Commit·main 반영·재배포를 명시 승인했습니다.
+- Phase A 완료: 90장 × 3해상도 = 270개 실제 화면 및 contact sheet 검토. 결과와 우선순위는 `docs/presenter-review.md`에 기록했습니다.
+- Phase B 완료: 공통 QuizReveal, 12개 quiz alias, 정답/해설의 두 클릭 공개, Cover 충돌 수정, 본문 대비와 footer step 표시를 구현했습니다. 12개 퀴즈 전진/후진/위치 유지 검사 및 build/check:build 통과.
+- Phase C 완료: HA→FA 2단계, CLA 유도 3단계, Ripple 6단계, Latch 4단계, Setup 7단계, Hold 4단계, SRAM Hold/Read/Write 경로 표시를 작성했습니다. Setup 동작 1장, SRAM 분리 2장을 추가해 총 93장입니다. 12챕터 순서와 기존 alias는 유지합니다. 9개 설명 동작의 전진·후진·다음 장에서 복귀·새로고침 검증 PASS.
+- Phase D 완료: 기존 3개 lab에 gate 기호, full-adder block, 실시간 setup timeline을 추가했습니다. 기존 logic.mjs와 계산 호출은 보존했습니다. Gate 24/FA 8조합, Timing 기본·경계·음수·64 corner, Tab/Space/마우스/Reset 검증 PASS.
+- Phase E 화면 확인: 93장 × 세 해상도의 초기/최종 상태 342개 촬영, contact sheet 4개 검토. Footer 여백 침범 35/68/89 수정 후 9 frames 재검사 PASS. 기본 도구막대의 Footer 링크 클릭 방해를 중앙 배치로 수정했고 최종 45개 대표 화면의 hit test와 세 해상도 클릭도 PASS. Console/network/수식/Mermaid/SVG 오류 및 남은 clipping 0.
+- 계산 검사: 기존 10개 + 새 ripple/geometry 2개 = 12개 테스트 PASS. 추가 dependency와 기존 계산 함수 변경은 없습니다.
+- 최종 명령: npm ci PASS(710 packages), npm test PASS(12), check:content PASS(93장/37 alias), build -- --base /lecture/ PASS, check:build -- /lecture/ PASS(17 refs). Git diff --check PASS. 설치·완료된 전체 검사를 재개 시 중복 실행하지 않았으며 수정 영향 범위만 추가 검증했습니다.
+- 발표 조작: Start/12개 목차 왕복/alias 새로고침/방향키/중앙 Contents/전체 화면/Overview/Presenter Mode PASS. Presenter 내부 전진·후진 PASS, Notes는 비어 있습니다.
+- 보존: package.json·package-lock·기존 logic/test·Workflow·SRAM SVG 두 개의 시작 시점 해시 일치. dist 296개 파일에서 내부 문서·로컬 메모·source notes 12개 제외 확인.
+- 문서: 전체 결과와 Before/After 링크는 `docs/presenter-review.md`, 재현 절차는 `docs/browser-qa.md`. 상세 결과는 ignored `output/presenter-validation.json`, `output/playwright/presenter-after-verified.json`입니다. 로컬 강의 보조 메모는 ignored `output/presenter-notes.md`에만 있습니다.
+- 반영 직전 체크포인트: 확인된 로컬 제품 오류는 없습니다. GitHub main HEAD는 `9984d36bc07aff78ef47a842981fcc8e5e7c158b`이며 이전 CI 복구 후 추가 변경이 없습니다. 새 Actions/Pages 결과는 이 Commit 작성 시점에는 미검증입니다. 공개 설정은 변경하지 않습니다.
+- 다음 정확한 재개 지점: 승인된 이번 변경만 현재 main을 부모로 Commit한 뒤 expected SHA를 지정해 fast-forward로 반영합니다. 새 Actions Run의 Build/Deploy 및 공개 URL UI를 검증합니다. 로컬 .git은 쓰기 제한 상태이므로 기존 HEAD/변경을 reset하지 마세요. gh 인증/네트워크 조회는 차단되어 연결된 GitHub 도구를 사용합니다. 최종 원격 결과는 Run과 최종 작업 보고를 확인하세요.
+
+## 최종 결과 — 2026-11-06
+
+- 승인된 16개 파일을 원격 main에 반영했습니다. Commit: [`9984d36bc07aff78ef47a842981fcc8e5e7c158b`](https://github.com/tacona1016/lecture/commit/9984d36bc07aff78ef47a842981fcc8e5e7c158b).
+- 새 [Actions Run 42233786239](https://github.com/tacona1016/lecture/actions/runs/42233786239): completed / success. build job `127946032180`, deploy job `127946304564` 모두 success입니다.
+- 새 CI에서 npm ci, 10개 논리 테스트, 12챕터/90장 검사, `/lecture/` build, 실제 asset 18개 검사, Pages configure/upload/deploy 전부 통과했습니다.
+- Deploy 로그: `2026-11-06T14:27:44Z Reported success!`, environment URL: https://tacona1016.github.io/lecture/ . 원격 main HEAD도 위 Commit과 일치합니다.
+- 로컬 검증: root와 prefix의 UI 실습/목차 모두 PASS, 90장 × 두 해상도 180개 화면 PASS. 기존 성공한 검사를 재개 후 반복하지 않았습니다. 최종 dist는 `/lecture/`용으로 복원했습니다.
+- 발표자 노트 주석 12개가 빌드 JavaScript에 포함되지 않았음을 추가 확인했습니다.
+- 공개 사이트의 실제 browser UI는 환경의 outbound 네트워크 제한 때문에 미검증입니다. 이전 접속 시 `net::ERR_NETWORK_ACCESS_DENIED`를 확인했습니다. 배포 성공과 실제 화면 접속 확인을 구분합니다.
+- 로컬 `.git`은 쓰기 제한으로 HEAD가 initial `1d4cf1b`에 남아 있습니다. 원격 Commit은 연결된 GitHub 도구로 생성/반영했습니다. 로컬 Git 상태에 수정으로 보이는 16개 파일은 이미 원격에 반영되었으므로 중복 Commit/Push하지 마세요.
+- 이 최종 결과 단락은 배포 완료 후 로컬 진행 문서에 추가한 기록입니다. 불필요한 재배포를 피하기 위해 이 문서 갱신만으로 추가 Push하지 않았습니다.
+
+현재 남은 것은 공개 URL을 일반 브라우저에서 확인하는 일과, 필요할 경우 쓰기 가능한 일반 터미널에서 로컬 Git 메타데이터를 원격과 동기화하는 일입니다. 코드/의존성/빌드 실패는 남아 있지 않습니다.
+
+## 원격 반영 직전 체크포인트 — CI 복구 및 실제 브라우저 검증
 
 2026-11-06 · 로컬 구현/검증 완료. 기존 원격 Run의 Build/Deploy 복구 완료. 사용자가 검증된 16개 파일의 원격 Commit·반영·재배포를 승인했습니다. 아래는 원격 반영 직전 검증 체크포인트이며, 후속 Run 결과는 배포 Workflow에서 확인합니다.
 

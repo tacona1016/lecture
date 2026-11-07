@@ -1,5 +1,6 @@
 ---
 routeAlias: ch04
+class: chapter-opening
 ---
 
 <ChapterHeader number="04" />
@@ -126,17 +127,27 @@ X를 1로 활용하면 네 셀을 묶어 $F=C$가 됩니다.
 - 입력 101·111이 실제로 발생할 수 있다면 출력 허용 조건을 재검토해야 합니다.
 
 ---
+routeAlias: quiz-ch04
+clicks: 2
+class: quiz-slide
+---
 
 # Check Your Grouping
+
+<QuizReveal :step="$clicks">
 
 1. 네 모서리가 한 그룹이 되는 이유는 무엇인가요?
 2. $F=\Sigma m(0,2,8,10)$을 4변수 map에서 간소화하세요.
 3. 최소 SOP가 언제나 가장 빠르고 hazard-free인 회로인가요?
 
-<div class="panel">
+<template #answer>
 
 **검산:** 위아래·좌우 wraparound로 인접합니다 / $\overline B\overline D$ / 아닙니다.
 
+</template>
+<template #explanation>
+
 예: $AB+\overline AC$에서 B=C=1인 채 A가 바뀌면 static-1 hazard가 생길 수 있습니다. Consensus 항 BC는 논리값을 유지하며 해당 hazard를 줄입니다.
 
-</div>
+</template>
+</QuizReveal>
