@@ -61,3 +61,16 @@ Slidev는 방문한 슬라이드를 DOM에 보존할 수 있으므로 locator는
 
 실행 결과와 차단 원인, 다음 재개 명령은 [implementation-status.md](implementation-status.md)에 기록합니다.
 2026-11-07 presenter 고도화의 검증 범위·스크린샷·수정 이력은 [presenter-review.md](presenter-review.md)에 기록합니다.
+
+## Warm Technical migration 검증
+
+현재 테마는 Warm Ivory / Deep Teal / Noto Sans KR Variable입니다. [전체 결과와 Before/After](WARM_TECHNICAL_MIGRATION.md)를 참조하세요.
+
+- 전체 93장의 모든 click 단계와 역방향을 세 해상도에서 확인합니다. 원본 장수나 기술 내용을 줄여 통과시키지 않습니다.
+- document.fonts.ready 후 촬영합니다. CSS family 선언만으로 로딩 성공이라 판단하지 않습니다. Chrome CDP `CSS.getPlatformFontsForNode`로 제목/한글/표/버튼/일반 SVG/Mermaid의 실제 custom Noto와 수식의 KaTeX를 확인합니다. Wrapper 대신 실제 text leaf를 검사합니다.
+- Fontsource 124개 Unicode subsets 중 사용한 범위만 요청되어야 합니다. 현재 Cover는 9개를 사용했고, 전체 강의의 한글 393자를 glyph probe로 확인했습니다.
+- CSS의 non-data URL과 @import, 실제 network requests를 확인합니다. SVG data URL 안의 xmlns http 문자열은 외부 요청과 구분합니다. 폰트·KaTeX·기존 SVG preload는 모두 `/lecture/` 아래에서 성공해야 합니다.
+- 일반 텍스트 4.5:1, 큰 텍스트 3:1, 중요한 경로 3:1 이상을 검사합니다. 상태는 색상과 숫자/라벨을 함께 확인합니다. Shadow DOM 안의 Mermaid node/edge label도 검사합니다. stateLabelColor의 자동 파생값이 배경색이 되지 않도록 주의합니다.
+- LocalDiagram과 SRAM은 저장소 SVG를 inline으로 렌더링합니다. SVG text font 공유, instance ID/href 연결, style scope, path/좌표/트랜지스터 극성 보존을 확인합니다.
+- font file dependency는 `vendor/fontsource-variable-noto-sans-kr`와 함께 보존합니다. 새 checkout에서 node_modules만 복사하거나, vendor 없이 lockfile만 반영하지 않습니다. OFL 전문은 dist/licenses에 있어야 합니다.
+- 자동화 helper와 JSON/PNG는 ignored output/playwright 및 output에 있습니다. 새 checkout에서는 없는 것이 정상일 수 있습니다. 실제 테스트 결과를 재실행 여부와 구분해 기록합니다.

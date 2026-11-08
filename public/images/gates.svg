@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 180" role="img" aria-labelledby="title">
 <title id="title">AND AND OR implementation of AB plus A not B, equivalent to A</title>
-<g stroke="#63d9eb" stroke-width="2.5" fill="none">
+<g stroke="#536068" stroke-width="2.5" fill="none">
 <path d="M160 25H190A30 30 0 0 1 190 85H160ZM160 105H190A30 30 0 0 1 190 165H160Z"/>
 <path d="M360 55Q390 90 360 125Q410 130 440 90Q410 50 360 55Z"/>
 <path d="M40 42H160M40 67H160M40 122H160M40 148H83M117 148H160M220 55H280V75H372M220 135H280V105H372M440 90H510"/>
 <path d="M83 135L106 148L83 161Z"/><circle cx="112" cy="148" r="5"/>
 <path d="M670 90H800"/>
 </g>
-<g fill="#e5f2ff" font-family="Consolas,monospace" font-size="20"><text x="12" y="48">A</text><text x="12" y="73">B</text><text x="12" y="128">A</text><text x="12" y="154">B</text><text x="290" y="42">AB</text><text x="290" y="156">A¬B</text><text x="515" y="96">F</text><text x="590" y="97">≡</text><text x="643" y="96">A</text><text x="807" y="96">F</text></g>
+<g fill="#26343C" font-family="Noto Sans KR Variable,Malgun Gothic,sans-serif" font-size="20"><text x="12" y="48">A</text><text x="12" y="73">B</text><text x="12" y="128">A</text><text x="12" y="154">B</text><text x="290" y="42">AB</text><text x="290" y="156">A¬B</text><text x="515" y="96">F</text><text x="590" y="97">≡</text><text x="643" y="96">A</text><text x="807" y="96">F</text></g>
 </svg>

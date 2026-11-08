@@ -5,6 +5,16 @@ Digital Logic to SRAM · 강의자가 회로 동작을 단계적으로 설명하
 
 현재 검증 상태와 제한은 [implementation-status](docs/implementation-status.md)에 기록합니다.
 
+## Presentation theme
+
+Warm Technical: Warm Ivory 배경, Deep Teal 강조, Dark Slate 본문, Amber 활성 경로를 사용합니다.
+980px / 16:9 canvas와 기존 93장·단계별 공개·실습 동작을 유지합니다. 폰트는 Noto Sans KR Variable이며 신호·숫자의 monospace와 KaTeX 수학 폰트는 보존합니다.
+
+공식 `@fontsource-variable/noto-sans-kr` 5.3.1 패키지를 [vendor](vendor/fontsource-variable-noto-sans-kr/UPSTREAM.md)에 포함하고 npm file dependency로 잠갔습니다.
+이 실행 환경의 registry 다운로드 제한에 대응한 것으로, 기존 의존성은 업그레이드하지 않았습니다. `npm ci`로 재현할 수 있습니다.
+Fontsource CSS의 Unicode ranges와 `font-display: swap`을 사용하며 런타임 CDN 요청은 없습니다. 배포본에 [OFL license](public/licenses/noto-sans-kr-OFL.txt)를 포함합니다.
+테마 변경 결과와 Before/After는 [Warm Technical migration](docs/WARM_TECHNICAL_MIGRATION.md)에 기록합니다. 이번 테마 변경은 원격 배포 승인 전의 로컬 변경입니다.
+
 ## Run locally
 
 Node.js 24.20.0을 권장합니다. 선택한 Slidev 53.1.0의 engine 요구로 최소 Node 22.22.0이 필요합니다.
@@ -70,7 +80,7 @@ npm run preview -- --base /sample-repository/
 
 Preview가 표시하는 base URL로 접속하세요. 사용자 사이트 `<owner>.github.io`는 `/`, 프로젝트 사이트는 `/<repo>/`입니다.
 `scripts/pages-base.mjs`가 GitHub repository 환경변수에서 base를 계산합니다. 저장소 이름은 소스에 고정하지 않습니다.
-Diagram은 `import.meta.env.BASE_URL`을 사용하며 웹폰트나 이미지 CDN에 의존하지 않습니다.
+Diagram은 저장소의 SVG를 Vite로 inline 번들링해 본문과 같은 로컬 웹폰트를 사용합니다. Public SVG와 Slidev preload 경로도 보존하며 웹폰트나 이미지 CDN에 의존하지 않습니다.
 
 저장소는 [tacona1016/lecture](https://github.com/tacona1016/lecture), 기본 브랜치는 main입니다.
 이 저장소의 Pages base는 `/lecture/`이며, 사이트 주소는 https://tacona1016.github.io/lecture/ 입니다.

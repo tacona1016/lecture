@@ -1,7 +1,8 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, useId } from 'vue'
+import { diagramArtwork } from '../lib/diagram-artwork.mjs'
 const props = defineProps({ mode: { type: String, default: 'hold' }, step: { type: Number, default: 0 } })
-const base = import.meta.env.BASE_URL
+const cellArtwork = diagramArtwork('images/sram-6t.svg', useId(), true)
 const q = computed(() => props.mode === 'write' && props.step >= 3 ? 1 : 0)
 const wl = computed(() => props.mode === 'read' ? props.step >= 2 : props.mode === 'write' && props.step >= 2 && props.step < 4)
 const labels = computed(() => ({
@@ -14,7 +15,7 @@ const labels = computed(() => ({
   <section class="engineering-viz sram-operation" :aria-label="`SRAM ${mode} walkthrough`" :data-mode="mode" :data-step="step" :data-q="q" :data-qb="1-q" :data-wl="Number(wl)">
     <div class="sram-signals"><span :class="wl?'level-high':'level-low'">WL {{ wl?'1 HIGH':'0 LOW' }}</span><span :class="q?'level-high':'level-low'">Q {{ q }} {{ q?'HIGH':'LOW' }}</span><span :class="!q?'level-high':'level-low'">QB {{ 1-q }} {{ !q?'HIGH':'LOW' }}</span><span>Access {{ wl?'ON':'OFF' }}</span></div>
     <svg viewBox="0 0 880 350" class="presenter-diagram sram-cell" role="img" aria-label="Validated six transistor bitcell with selected conduction paths overlaid; wiring and device polarities preserved">
-      <image :href="`${base}images/sram-6t.svg`" width="880" height="350" opacity="0.72" />
+      <g v-html="cellArtwork" />
       <g v-if="step>=1" fill="none" stroke-linejoin="round" stroke-linecap="round">
         <path d="M163 155V35H717V155" :class="wl?'selected-path':'inactive-path'" />
         <g v-if="mode==='hold'&&step>=2 || mode==='write'&&step>=3">
@@ -32,6 +33,6 @@ const labels = computed(() => ({
       <span v-else-if="mode==='write'">{{ step>=4?'Write driver released · new state held':'Write driver: BL = 1 HIGH · BLB = 0 LOW' }}</span>
     </div>
     <StageCaption :step="step" :labels="labels" />
-    <p class="model-note">Cyan=선택 경로 · 교육용 개념도이며 SPICE 해석이 아닙니다.</p>
+    <p class="model-note">Amber=선택 경로 · 교육용 개념도이며 SPICE 해석이 아닙니다.</p>
   </section>
 </template>

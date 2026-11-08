@@ -6,7 +6,7 @@ info: Digital Logic to SRAM · 공개 교육용 디지털 논리설계 세미나
 author: Logic Design Seminar
 lang: ko
 favicon: /favicon.svg
-colorSchema: dark
+colorSchema: light
 aspectRatio: 16/9
 canvasWidth: 980
 transition: none
@@ -14,7 +14,7 @@ drawings:
   enabled: false
 fonts:
   provider: none
-  sans: Malgun Gothic, Apple SD Gothic Neo, sans-serif
+  sans: Noto Sans KR Variable, Malgun Gothic, Apple SD Gothic Neo, sans-serif
   mono: Consolas, monospace
 ---
 

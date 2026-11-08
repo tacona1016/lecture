@@ -22,6 +22,7 @@ For each requested chapter or enhancement, define:
 Target **6–8 substantive slides per chapter** initially. Use English headings and established terms with concise Korean explanation. Prioritize drawing, waveforms, and equations over paragraphs; avoid illegible text or densely packed slides.
 
 ## 3. Make accurate visuals
+- Use Warm Technical: Warm Ivory, Deep Teal, Dark Slate, Amber active paths, and locally bundled Noto Sans KR Variable. Preserve KaTeX fonts, circuit geometry, equations, routes, and click/state logic in theme-only edits.
 - Use KaTeX for math, Mermaid for block/state flow, and accurate local SVG for gates, timing diagrams, SRAM schematics; use Vue components for small adjustable demos.
 - Verify actual connections and labels: bubbles for inversion, carry/borrow direction, WL/BL/BLB polarity, clock edges, timing intervals, FSM output location.
 - Use a diagram label to distinguish an abstract block diagram from a transistor-level circuit. For a 6T SRAM bitcell show two cross-coupled CMOS inverters and two wordline-controlled access NMOS between Q/QB and BL/BLB.
@@ -67,3 +68,5 @@ Target **6–8 substantive slides per chapter** initially. Use English headings 
 3. If installed/available, invoke `$playwright` to inspect layout and behavior in the **rendered** Slidev site (1920×1080, 1366×768). Capture and fix overlapping elements, missing math/diagrams, console errors, broken chapter routes, and interactive control failures.
 4. Check the production built site with its GitHub Pages base prefix if feasible. Use `$gh-fix-ci` for actual CI failures rather than guessing.
 5. Report: changed chapters/components, what was verified and how, what remains unverified, and follow-up improvements. Do not assert a deployment succeeded without an actual GitHub Actions success signal.
+
+Theme migrations also require 1280x720, local font/fallback checks, normal-text contrast >=4.5:1 (large >=3:1), external SVG/Mermaid review, and forward/reverse reveal validation.

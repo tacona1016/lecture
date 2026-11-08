@@ -11,7 +11,7 @@
 - `slides.md`: cover, clickable table of contents, and the ordered imports of chapter decks.
 - `chapters/NN-topic.md`: one Markdown file per chapter; preserve chapter identifiers and stable routes during edits.
 - `components/`: reusable Vue 3 interactive teaching demos; keep calculations in small testable functions if useful.
-- `styles/index.css`: compact, readable 16:9 dark navy teaching theme; avoid excessive whitespace and text overflow.
+- `styles/index.css`: presentation-first **Warm Technical** theme on a 980px, 16:9 canvas: Warm Ivory background (#F7F5EF), Deep Teal accent (#086F69), Dark Slate text, and locally bundled Noto Sans KR Variable with fallbacks. Use Amber for active paths and labeled HIGH/LOW/PASS/VIOLATION states. Keep KaTeX math fonts intact; avoid excessive whitespace and text overflow.
 - `public/`: only distributable local assets; use relative or base-aware paths for GitHub Pages.
 - `.github/workflows/deploy.yml`: deterministic build and official GitHub Pages deployment.
 - `.agents/skills/slidev-seminar/SKILL.md`: domain-specific authoring/review workflow. Invoke `$slidev-seminar` when writing, revising, or verifying teaching slides, equations, diagrams, or simulations.
@@ -45,6 +45,7 @@ Do not silently change this structure. Explain proposed topic changes first. Kee
 3. Keep dependencies minimal and lock versions with `package-lock.json`. Prefer Vue 3 Composition API, semantic buttons, accessible labels, and keyboard-compatible controls.
 4. Run `npm ci` (if lockfile exists) and `npm run build` after functional edits. Add targeted deterministic tests for Boolean/arithmetic/timing logic. Do not claim tests ran if they did not.
 5. Verify Slidev navigation, LaTeX, Mermaid, local assets, JavaScript console, and slide clipping at **1920×1080** and **1366×768** using the installed Playwright workflow where feasible.
+   For theme changes also check **1280×720**, font loading without runtime CDN requests, text contrast (4.5:1 normal / 3:1 large), SVG/Mermaid colors, and every reveal state. Preserve circuit geometry, equations, calculations, routes, and interaction logic during theme-only migrations.
 6. For longer multi-chapter work, maintain `docs/implementation-status.md` with per-chapter status, completed checks, blockers, and exact next steps; update it at meaningful checkpoints so interrupted Codex sessions can resume reliably.
 7. When GitHub Actions is failing, use installed `$gh-fix-ci` when relevant, check `gh` availability/authentication, inspect actual workflow logs, repair root causes, then rebuild and report.
 8. Do not push, create repositories, alter repository visibility, enable Pages settings, delete content, or force-reset branches unless specifically authorized. Report clearly what local changes need a user-side GitHub action.

@@ -1,5 +1,21 @@
 # Implementation status
 
+## Warm Technical migration — 2026-11-08 로컬 완료 / 원격 미반영
+
+- 기준: 현재 93장, 기존 미커밋/기반 변경을 포함한 57개 파일을 `output/warm-theme-baseline/`에 SHA-256과 함께 보존했습니다. 이번 테마 변경의 원격 Push/배포 승인은 없습니다.
+- 조사: 색상은 styles/index.css와 외부 SVG 7개, waveform generator에 집중되어 있습니다. Vue 계산/입력 상태와 chapter의 수식/route/reveal은 보존합니다.
+- Before: Chrome/Playwright로 지정 대표 화면을 3해상도에서 39개 캡처했습니다. `output/playwright/warm-before-report.txt`, `warm-before-*.png`입니다.
+- 구현 완료: 의미 기반 Warm 팔레트, light headmatter, Mermaid base theme, CSS typography, 기존 SVG recolor를 작성했습니다. 외부 SVG를 inline으로 렌더링해 같은 문서의 로컬 웹폰트를 사용할 수 있게 하고 ID 충돌을 방지합니다. 회로 좌표/연결은 바꾸지 않았습니다.
+- 폰트 해결: registry는 EACCES지만 연결 GitHub 도구로 공식 Fontsource 5.3.1 패키지 전체 135개 파일(124 WOFF2)을 고정 upstream SHA `5a72889057f592bb0659629e38337359f94d53b2`에서 복사하고 각 Git blob SHA를 검증했습니다. vendor/fontsource-variable-noto-sans-kr에 보존하고 npm file dependency/lockfile로 연결했습니다. CSS import와 공개 OFL 사본을 추가했습니다. 첫 실제 브라우저 probe에서 제목·한글·SVG 모두 custom Noto font 사용, Cover 9/124 subsets, font-display swap, 외부 요청/404 0을 확인했습니다.
+- AGENTS.md는 새 테마로 갱신했습니다. 보호 경로의 Skill 변경은 사용자에게 검토 가능한 전체 수정안을 제공했고, 사용자가 일반 터미널에서 복사했습니다. 실제 Skill에 Warm Technical 문구가 있는 것을 확인했습니다. 우회 쓰기/권한 변경은 하지 않았습니다.
+- 대비: 실제 HTML/SVG 텍스트의 기준 미달은 0입니다. Amber는 강조 경로/도형에 사용하며 Warm Gray 위 4.27:1로 그래픽 3:1 기준을 충족합니다. Mermaid Shadow DOM의 실제 label도 8장 × 3해상도에서 Noto와 최소 10.84:1 대비를 확인했습니다.
+- 전체 After: 93장, 3해상도, 모든 공개 단계 459개 화면 검사 완료. Slide 43 sampling 주석의 상단 경계 2건을 17→16px로 조정했습니다. 추가 Shadow DOM 검사에서 slide 56의 흰색 A/B/C를 발견해 Mermaid stateLabelColor를 Dark Slate로 명시했습니다. 해당 영향 범위 45개 화면을 재검사했고, 최종 잘림/대비/겹침/KaTeX/Mermaid/404/console/외부 요청 오류는 0입니다. 회로 경로/클릭 로직은 바꾸지 않았습니다.
+- 명령 검증 완료: npm ci PASS(711 packages), npm test PASS(12/12), check:content PASS(12 chapters / 93 slides / 37 aliases), `/lecture/` build PASS(5.47초, --without-notes), check:build PASS(17개 참조와 SPA fallback). Lint script는 없습니다. 빌드의 PLUGIN_TIMINGS는 성능 안내이며 빌드는 성공했습니다.
+- 폰트/산출물: CSS 183개 local URL, Noto WOFF2 124개, OFL 전문을 확인했습니다. Chrome CDP에서 제목 93개와 한글 393자 전부, 표/버튼/SVG/Mermaid의 실제 Noto와 수식 KaTeX를 확인했습니다. 중간 KaTeX wrapper probe는 실제 glyph leaf를 검사하도록 고쳤습니다. CDN 외부 요청은 없습니다.
+- 기능 회귀 완료: 해상도별 Gate 24 / FA 8조합, Timing ±skew/0 ns/64 corner, 12개 Quiz의 0→1→2→1→0 공개, 설명 동작 9개 전진/후진/재진입/새로고침, 목차12/alias/전체 화면/Presenter/키보드/Reset PASS. 공개 build Presenter Notes는 비어 있습니다.
+- 보존: chapter 12개를 포함한 보호 파일 31개 SHA, SVG 8개 geometry/극성/라벨, 기존 의존성 entry 753개가 기준과 같습니다. 기존 변경사항은 삭제하지 않았습니다.
+- 결과와 재개: [WARM_TECHNICAL_MIGRATION.md](WARM_TECHNICAL_MIGRATION.md), [SESSION_HANDOFF.md](SESSION_HANDOFF.md), `output/warm-validation.json`을 읽습니다. 로컬 구현/검증은 완료됐으므로 반복 구현하지 않습니다. 다음 단계는 이번 migration의 별도 원격 승인 후 테마 변경만 반영하고 새 Actions/Pages를 검증하는 것입니다. 현재 원격 Commit/Push/배포는 하지 않았으며 실제 교실 프로젝터 확인도 미수행입니다.
+
 ## 세션 마감 — 2026-11-08
 
 다음 세션의 시작 문서는 [SESSION_HANDOFF.md](SESSION_HANDOFF.md)입니다. 강의 기능은 b73e882로 이미 원격 반영·배포됐으며 이번 마감은 문서 3개(인수인계, 이 상태 기록, presenter-review의 최종 배포 결과)만 별도 Commit 대상으로 지정합니다. 이전에 로컬에만 보관한 배포 결과를 이번 사용자 요청에 따라 Git에 저장합니다. 기존 코드와 다른 변경은 보존합니다.

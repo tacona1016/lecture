@@ -1,12 +1,26 @@
 # Session Handoff
 
+## 최신 상태: Warm Technical migration (2026-11-08)
+
+새 요청에 따라 테마를 **Warm Technical / Warm Ivory / Deep Teal / Noto Sans KR Variable**로 변경했습니다. 이 migration은 **로컬 완료, 원격 Commit/Push/배포 미수행**입니다. 아래 b73e882/15badfda 이력과 Pages 성공은 이전 기능/정리 버전이며 Warm 배포 성공이 아닙니다.
+
+- 다음 세션은 [WARM_TECHNICAL_MIGRATION.md](WARM_TECHNICAL_MIGRATION.md)와 AGENTS.md, 실제 갱신된 slidev-seminar Skill부터 읽습니다.
+- 12개 chapter/93장과 기존 계산/입력/route/reveal은 보존했습니다. 31개 보호 파일 SHA와 SVG 8개 geometry/극성/라벨을 비교 검증했습니다.
+- 공식 Fontsource 5.3.1 패키지를 고정 upstream에서 blob SHA 검증 후 vendor로 포함했습니다. npm file dependency와 lockfile, public OFL을 함께 유지합니다. 폰트/CDN 네트워크 제한은 이 방식으로 해결했습니다.
+- npm ci/test/content/build/check:build PASS. 전체 459개 상태, 수정 범위 45개 재검사, Mermaid Shadow DOM 24개 검사, 모든 실습/퀴즈/발표 도구 회귀 PASS. 실제 한글 393자·제목 93개와 SVG/표/버튼/Mermaid에서 Noto, 수식에서 KaTeX를 확인했습니다.
+- 작업 기준 snapshot은 output/warm-theme-baseline/manifest.json, 결과는 output/warm-validation.json입니다. source의 LocalDiagram/SramOperation은 동일 SVG를 inline으로 표시하고 CSS/ID를 instance별로 한정합니다.
+- 공개 Warm 버전은 미검증/미배포입니다. 사용자가 이번 migration의 원격 반영을 별도로 승인하기 전에는 Push하지 않습니다. 기존 승인과 CI 성공을 재사용하지 마세요.
+- 알려진 로컬 시각/기능 오류는 없습니다. 실제 프로젝터 확인은 미수행입니다. Git 쓰기 제한/기존 dirty는 아래 주의 사항과 동일하며 원격과 비교하지 않고 reset/clean하지 않습니다.
+
+아래는 테마 변경 이전 세션 정리 기록입니다.
+
 최종 정리일: 2026-11-08 (Asia/Seoul). 강의 기능 구현과 GitHub Pages 배포는 완료됐습니다. 공개 사이트의 실제 브라우저 UI 확인만 환경 제한으로 남아 있습니다. 새로운 기능 개발은 시작하지 않고 세션을 종료합니다.
 
 ## 프로젝트와 브랜치
 
 - 프로젝트: Logic Design Fundamentals / Logic Design Seminar.
 - 위치: `C:\lecture`, 저장소: [tacona1016/lecture](https://github.com/tacona1016/lecture), 작업·기본 브랜치: `main`.
-- 정적 Slidev + Vue 3 + Markdown, SVG, Mermaid, KaTeX. Dark Navy + Cyan, 강의자 발표 중심입니다.
+- 정적 Slidev + Vue 3 + Markdown, SVG, Mermaid, KaTeX. 현재 로컬은 Warm Technical이며 강의자 발표 중심입니다.
 - 공개 주소: https://tacona1016.github.io/lecture/ , Pages base: `/lecture/`.
 - 실제 확인한 환경: Node 24.20.0, npm 11.19.0, Slidev 53.1.0, Vue 3.5.22. package.json의 Node 최소 버전은 22.22.0입니다.
 - 배포: `.github/workflows/deploy.yml`. main push와 workflow_dispatch, 공식 GitHub Pages Actions, `--without-notes` 정책입니다.

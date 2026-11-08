@@ -1,24 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 350" role="img" aria-labelledby="title desc">
 <title id="title">6T SRAM transistor connectivity</title><desc id="desc">PMOS P1 and NMOS N1 share gate QB and drive Q. PMOS P2 and NMOS N2 share gate Q and drive QB. Access NMOS AX1 connects BL to Q and AX2 connects QB to BLB; both gates connect WL. PMOS to VDD and NMOS to VSS; body terminals omitted.</desc>
 <defs>
-<g id="nmos" fill="none" stroke="#68ddec" stroke-width="2.5"><path d="M0 -28V-17H-12V17H0V28M-22 -17V17M-40 0H-22"/></g>
-<g id="pmos" fill="none" stroke="#68ddec" stroke-width="2.5"><path d="M0 -28V-17H-12V17H0V28M-22 -17V17M-40 0H-34"/><circle cx="-28" cy="0" r="6"/></g>
-<g id="access" fill="none" stroke="#68ddec" stroke-width="2.5"><path d="M-32 0H-18V12H18V0H32M-18 -1H18M0 -20V-1"/></g>
+<g id="nmos" fill="none" stroke="#536068" stroke-width="2.5"><path d="M0 -28V-17H-12V17H0V28M-22 -17V17M-40 0H-22"/></g>
+<g id="pmos" fill="none" stroke="#536068" stroke-width="2.5"><path d="M0 -28V-17H-12V17H0V28M-22 -17V17M-40 0H-34"/><circle cx="-28" cy="0" r="6"/></g>
+<g id="access" fill="none" stroke="#536068" stroke-width="2.5"><path d="M-32 0H-18V12H18V0H32M-18 -1H18M0 -20V-1"/></g>
 </defs>
-<g stroke="#68ddec" stroke-width="2.5" fill="none">
+<g stroke="#536068" stroke-width="2.5" fill="none">
 <path d="M300 55H580M300 55V67M580 55V67M300 123V227M580 123V227M300 283V315H580V283"/>
 <path d="M260 95H240V255H260M540 95H520V255H540"/>
 <path d="M300 175H195M131 175H85V65M580 175H685M749 175H795V65"/>
 <path d="M163 155V35H717V155"/>
-<path d="M528 218Q520 206 512 218M308 205Q300 193 292 205" stroke="#0b1324" stroke-width="8"/>
+<path d="M528 218Q520 206 512 218M308 205Q300 193 292 205" stroke="#F7F5EF" stroke-width="8"/>
 <path d="M300 175V142H480V205H520M580 175V218H528Q520 206 512 218H365V205H308Q300 193 292 205H240"/>
 </g>
 <use href="#pmos" x="300" y="95"/><use href="#nmos" x="300" y="255"/>
 <use href="#pmos" x="580" y="95"/><use href="#nmos" x="580" y="255"/>
 <use href="#access" x="163" y="175"/><use href="#access" x="717" y="175"/>
-<g fill="#68ddec"><circle cx="300" cy="175" r="4"/><circle cx="580" cy="175" r="4"/><circle cx="240" cy="205" r="4"/><circle cx="520" cy="205" r="4"/></g>
-<g fill="#e6f2ff" font-size="17" font-family="Consolas,monospace" text-anchor="middle">
+<g fill="#536068"><circle cx="300" cy="175" r="4"/><circle cx="580" cy="175" r="4"/><circle cx="240" cy="205" r="4"/><circle cx="520" cy="205" r="4"/></g>
+<g fill="#26343C" font-size="17" font-family="Noto Sans KR Variable,Malgun Gothic,sans-serif" text-anchor="middle">
 <text x="620" y="60">VDD</text><text x="440" y="340">VSS (0)</text><text x="440" y="24">WL</text><text x="85" y="54">BL</text><text x="795" y="54">BLB</text>
-<text x="319" y="169" fill="#55dcf1">Q</text><text x="607" y="169" fill="#55dcf1">QB</text><text x="332" y="100">P1</text><text x="612" y="100">P2</text><text x="332" y="262">N1</text><text x="612" y="262">N2</text><text x="163" y="213">AX1</text><text x="717" y="213">AX2</text><text x="211" y="291" font-size="13">gate=QB</text><text x="491" y="291" font-size="13">gate=Q</text>
+<text x="319" y="169" fill="#086F69">Q</text><text x="607" y="169" fill="#086F69">QB</text><text x="332" y="100">P1</text><text x="612" y="100">P2</text><text x="332" y="262">N1</text><text x="612" y="262">N2</text><text x="163" y="213">AX1</text><text x="717" y="213">AX2</text><text x="211" y="291" font-size="13">gate=QB</text><text x="491" y="291" font-size="13">gate=Q</text>
 </g>
 </svg>

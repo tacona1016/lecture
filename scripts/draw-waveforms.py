@@ -6,10 +6,10 @@ DEST = Path(__file__).resolve().parents[1] / 'public' / 'images'
 
 def svg(title, height, content):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 {height}" role="img" aria-labelledby="title">
-<title id="title">{title}</title><style>text{{fill:#e6f2ff;font:16px Consolas,monospace}}.muted{{fill:#a9bed7;font-size:13px}}.wave{{stroke:#55dcf1;stroke-width:2.5;fill:none}}.guide{{stroke:#3a506c;stroke-dasharray:4 4}}</style>{content}</svg>'''
+<title id="title">{title}</title><style>text{{fill:#26343C;font:16px Noto Sans KR Variable,Malgun Gothic,sans-serif}}.muted{{fill:#536068;font-size:13px}}.wave{{stroke:#086F69;stroke-width:2.5;fill:none}}.guide{{stroke:#536068;stroke-dasharray:4 4}}</style>{content}</svg>'''
 
 
-def wave(label, y, changes, end=10, color='#55dcf1'):
+def wave(label, y, changes, end=10, color='#086F69'):
     x = lambda t: 150 + 65 * t
     prev = changes[0][1]
     path = f'M{x(0)} {y-22*prev}'
@@ -32,7 +32,7 @@ write('latch-ff.svg', 'Ideal latch and flip-flop waveforms, initial Q=0', 255,
       + '<text class="muted" x="210" y="18">sample ↑</text><text class="muted" x="535" y="18">sample ↑</text>')
 
 write('setup-window.svg', 'Setup and hold window around a rising edge', 195,
-      '<rect x="340" y="12" width="210" height="158" fill="#243f54"/>'
+      '<rect x="340" y="12" width="210" height="158" fill="#EEECE5"/>'
       '<path class="guide" d="M450 5V175"/>'
       '<text class="muted" x="349" y="30">setup</text><text class="muted" x="478" y="30">hold</text>'
       + wave('CLK', 77, [(0, 0), (4.6154, 1), (8, 0)])
@@ -51,7 +51,7 @@ write('sram-timing.svg', 'Conceptual SRAM read and write phases, not voltage sim
       '<text x="10" y="20">READ: Q=0</text><text class="muted" x="155" y="20">precharge → develop → sense</text>'
       + wave('PCH enable', 59, [(0, 1), (2, 0), (8.5, 1)])
       + wave('WL (read)', 101, [(0, 0), (3, 1), (8, 0)])
-      + '<text x="10" y="137">BL / BLB</text><path d="M150 119H345L540 135H702.5V119H800M150 116H800" stroke="#55dcf1" stroke-width="2" fill="none"/><text class="muted" x="545" y="154">sense differential</text>'
+      + '<text x="10" y="137">BL / BLB</text><path d="M150 119H345L540 135H702.5V119H800M150 116H800" stroke="#086F69" stroke-width="2" fill="none"/><text class="muted" x="545" y="154">sense differential</text>'
       + '<text x="10" y="182">WRITE Q←0</text><text class="muted" x="190" y="182">drive BL=0, BLB=1 before WL↑; release after WL↓</text>'
       + wave('Write drive', 222, [(0, 0), (2, 1), (9, 0)])
       + wave('WL (write)', 260, [(0, 0), (3, 1), (8, 0)]))
