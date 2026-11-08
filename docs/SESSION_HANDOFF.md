@@ -2,15 +2,21 @@
 
 ## 최신 상태: Warm Technical migration (2026-11-08)
 
-새 요청에 따라 테마를 **Warm Technical / Warm Ivory / Deep Teal / Noto Sans KR Variable**로 변경했습니다. 이 migration은 **로컬 완료, 원격 Commit/Push/배포 미수행**입니다. 아래 b73e882/15badfda 이력과 Pages 성공은 이전 기능/정리 버전이며 Warm 배포 성공이 아닙니다.
+새 요청에 따라 테마를 **Warm Technical / Warm Ivory / Deep Teal / Noto Sans KR Variable**로 변경했습니다. 사용자가 이번 migration의 배포를 명시 승인했고, **main 반영 및 GitHub Actions Build/Deploy가 모두 성공**했습니다. 아래 b73e882/15badfda 이력은 이전 기능/정리 버전입니다.
+
+- 배포 Commit: [9f0522d437c4562bdb1c942b970f2592c08d7fbc](https://github.com/tacona1016/lecture/commit/9f0522d437c4562bdb1c942b970f2592c08d7fbc), 변경 162개 파일. Parent는 15badfda이며 다른 원격 변경은 없었습니다. 162개 blob SHA와 범위 밖 기존 파일 40개 보존을 검증한 뒤 force 없이 main을 갱신했습니다.
+- [Actions Run 42460558247](https://github.com/tacona1016/lecture/actions/runs/42460558247): completed/success. Build 128668731371, Deploy 128668846300 모두 success입니다. CI에서도 npm ci 711 packages, tests 12/12, 93장/37 alias, `/lecture/` build 4.51초와 산출물 검사 PASS입니다.
+- Pages: https://tacona1016.github.io/lecture/ . Deploy 로그는 2026-11-08T07:53:29.3522614Z에 Reported success를 기록했습니다. 실제 공개 브라우저 접속은 ERR_NETWORK_ACCESS_DENIED이며 외부 web 도구도 접근하지 못했습니다. 공개 UI는 미검증입니다.
 
 - 다음 세션은 [WARM_TECHNICAL_MIGRATION.md](WARM_TECHNICAL_MIGRATION.md)와 AGENTS.md, 실제 갱신된 slidev-seminar Skill부터 읽습니다.
 - 12개 chapter/93장과 기존 계산/입력/route/reveal은 보존했습니다. 31개 보호 파일 SHA와 SVG 8개 geometry/극성/라벨을 비교 검증했습니다.
 - 공식 Fontsource 5.3.1 패키지를 고정 upstream에서 blob SHA 검증 후 vendor로 포함했습니다. npm file dependency와 lockfile, public OFL을 함께 유지합니다. 폰트/CDN 네트워크 제한은 이 방식으로 해결했습니다.
 - npm ci/test/content/build/check:build PASS. 전체 459개 상태, 수정 범위 45개 재검사, Mermaid Shadow DOM 24개 검사, 모든 실습/퀴즈/발표 도구 회귀 PASS. 실제 한글 393자·제목 93개와 SVG/표/버튼/Mermaid에서 Noto, 수식에서 KaTeX를 확인했습니다.
 - 작업 기준 snapshot은 output/warm-theme-baseline/manifest.json, 결과는 output/warm-validation.json입니다. source의 LocalDiagram/SramOperation은 동일 SVG를 inline으로 표시하고 CSS/ID를 instance별로 한정합니다.
-- 공개 Warm 버전은 미검증/미배포입니다. 사용자가 이번 migration의 원격 반영을 별도로 승인하기 전에는 Push하지 않습니다. 기존 승인과 CI 성공을 재사용하지 마세요.
+- Warm 배포는 완료됐습니다. 다음 세션의 첫 작업은 네트워크가 허용된 일반 브라우저에서 새 테마·목차 12개·chapter 새로고침·실습을 확인하는 것입니다. 완료된 파일 업로드/Commit/배포/로컬 전체 검증을 반복하지 마세요. 향후 별개 변경에는 이번 배포 승인을 자동 재사용하지 않습니다.
+- 배포 기록은 output/warm-theme-deployment.json과 warm-ci-build.log, warm-ci-deploy.log에 있습니다. output/warm-validation.json은 배포 전 로컬 검증 기록입니다. 이 문서 등 배포 결과 3개 문서는 별도 `[skip ci]` 정리 Commit에 반영하며 앱 산출물을 바꾸지 않습니다.
 - 알려진 로컬 시각/기능 오류는 없습니다. 실제 프로젝터 확인은 미수행입니다. Git 쓰기 제한/기존 dirty는 아래 주의 사항과 동일하며 원격과 비교하지 않고 reset/clean하지 않습니다.
+- 재개 점검: package.json에 Supabase/Vercel 의존성이 없고 supabase/config.toml, .supabase, vercel.json, .vercel/project.json도 없습니다. 이 프로젝트는 GitHub Pages를 사용하므로 해당 서비스의 변경/배포/migration은 없습니다. 계정 전체의 원격 Supabase/Vercel 리소스 상태는 미확인입니다.
 
 아래는 테마 변경 이전 세션 정리 기록입니다.
 

@@ -1,8 +1,10 @@
 # Implementation status
 
-## Warm Technical migration — 2026-11-08 로컬 완료 / 원격 미반영
+## Warm Technical migration — 2026-11-08 main 반영 / Build·Deploy 성공
 
-- 기준: 현재 93장, 기존 미커밋/기반 변경을 포함한 57개 파일을 `output/warm-theme-baseline/`에 SHA-256과 함께 보존했습니다. 이번 테마 변경의 원격 Push/배포 승인은 없습니다.
+- 기준: 현재 93장, 기존 미커밋/기반 변경을 포함한 57개 파일을 `output/warm-theme-baseline/`에 SHA-256과 함께 보존했습니다. 로컬 검증 보고 후 사용자가 이번 테마 배포를 명시 승인했습니다.
+- 원격 완료: [Commit 9f0522d](https://github.com/tacona1016/lecture/commit/9f0522d437c4562bdb1c942b970f2592c08d7fbc), [Actions Run 42460558247](https://github.com/tacona1016/lecture/actions/runs/42460558247) completed/success. Build 128668731371와 Deploy 128668846300 모두 success이며, CI의 설치/테스트/93장/37 aliases/4.51초 build/산출물 검사도 통과했습니다. Deploy가 2026-11-08T07:53:29.3522614Z에 success를 보고했습니다.
+- 공개 UI 확인: https://tacona1016.github.io/lecture/ 접속을 Playwright로 시도했지만 ERR_NETWORK_ACCESS_DENIED로 차단됐습니다. 외부 web 도구도 접근하지 못했습니다. 실제 공개 화면은 미검증입니다. 로컬 전체 검증과 GitHub 배포 성공을 구분합니다.
 - 조사: 색상은 styles/index.css와 외부 SVG 7개, waveform generator에 집중되어 있습니다. Vue 계산/입력 상태와 chapter의 수식/route/reveal은 보존합니다.
 - Before: Chrome/Playwright로 지정 대표 화면을 3해상도에서 39개 캡처했습니다. `output/playwright/warm-before-report.txt`, `warm-before-*.png`입니다.
 - 구현 완료: 의미 기반 Warm 팔레트, light headmatter, Mermaid base theme, CSS typography, 기존 SVG recolor를 작성했습니다. 외부 SVG를 inline으로 렌더링해 같은 문서의 로컬 웹폰트를 사용할 수 있게 하고 ID 충돌을 방지합니다. 회로 좌표/연결은 바꾸지 않았습니다.
@@ -14,7 +16,7 @@
 - 폰트/산출물: CSS 183개 local URL, Noto WOFF2 124개, OFL 전문을 확인했습니다. Chrome CDP에서 제목 93개와 한글 393자 전부, 표/버튼/SVG/Mermaid의 실제 Noto와 수식 KaTeX를 확인했습니다. 중간 KaTeX wrapper probe는 실제 glyph leaf를 검사하도록 고쳤습니다. CDN 외부 요청은 없습니다.
 - 기능 회귀 완료: 해상도별 Gate 24 / FA 8조합, Timing ±skew/0 ns/64 corner, 12개 Quiz의 0→1→2→1→0 공개, 설명 동작 9개 전진/후진/재진입/새로고침, 목차12/alias/전체 화면/Presenter/키보드/Reset PASS. 공개 build Presenter Notes는 비어 있습니다.
 - 보존: chapter 12개를 포함한 보호 파일 31개 SHA, SVG 8개 geometry/극성/라벨, 기존 의존성 entry 753개가 기준과 같습니다. 기존 변경사항은 삭제하지 않았습니다.
-- 결과와 재개: [WARM_TECHNICAL_MIGRATION.md](WARM_TECHNICAL_MIGRATION.md), [SESSION_HANDOFF.md](SESSION_HANDOFF.md), `output/warm-validation.json`을 읽습니다. 로컬 구현/검증은 완료됐으므로 반복 구현하지 않습니다. 다음 단계는 이번 migration의 별도 원격 승인 후 테마 변경만 반영하고 새 Actions/Pages를 검증하는 것입니다. 현재 원격 Commit/Push/배포는 하지 않았으며 실제 교실 프로젝터 확인도 미수행입니다.
+- 결과와 재개: [WARM_TECHNICAL_MIGRATION.md](WARM_TECHNICAL_MIGRATION.md), [SESSION_HANDOFF.md](SESSION_HANDOFF.md), 배포 전 `output/warm-validation.json`과 배포 후 `output/warm-theme-deployment.json`을 읽습니다. 구현/로컬 검증/원격 배포는 완료됐으므로 반복하지 않습니다. 다음 단계는 네트워크가 허용된 브라우저에서 공개 테마·목차·chapter/실습을 확인하는 것입니다. 실제 교실 프로젝터 확인도 미수행입니다. 배포 결과 문서 3개는 `[skip ci]`로 별도 정리하며 앱은 변경하지 않습니다.
 
 ## 세션 마감 — 2026-11-08
 

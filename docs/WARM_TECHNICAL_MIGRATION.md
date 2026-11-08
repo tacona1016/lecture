@@ -1,6 +1,8 @@
 # Warm Technical Theme Migration
 
-2026-11-08 · **로컬 구현·검증 완료, 원격 Push/배포 미수행**. 12개 챕터와 93장, 계산·입력·라우팅·공개 순서를 유지했습니다.
+2026-11-08 · **로컬 검증·main 반영·GitHub Actions Build/Deploy 완료**. 12개 챕터와 93장, 계산·입력·라우팅·공개 순서를 유지했습니다.
+
+사용자의 배포 승인 후 [Commit 9f0522d](https://github.com/tacona1016/lecture/commit/9f0522d437c4562bdb1c942b970f2592c08d7fbc)를 main에 반영했습니다. [Actions Run 42460558247](https://github.com/tacona1016/lecture/actions/runs/42460558247)의 Build와 Deploy가 모두 success입니다. 사이트는 https://tacona1016.github.io/lecture/ 입니다. 공개 URL은 실행 환경의 ERR_NETWORK_ACCESS_DENIED로 브라우저 UI 미검증이며, 배포 성공과 구분합니다.
 
 ## A. 변경 요약
 
@@ -94,17 +96,18 @@ Shadow DOM 내부의 실제 색상까지 확인하자 Mealy slide 56의 A/B/C가
 | Accessibility | Tab/Space/마우스 slider/Reset/입력 중 이동 방지/초점 복귀 PASS |
 | Preservation | 31개 보호 파일 SHA 동일(12개 chapter 포함), SVG 8개 모든 geometry/label/polarity 동일, 기존 의존성 entry 753개 동일 |
 | Final review | 기준 대비 변경 파일 21개, 새 source/document 5개와 vendor 136개 확인. SRAM은 SVG embedding/색상 범례 외 전체 source가 동일합니다. 문서 링크·git diff --check 통과, 배포 산출물에 source/내부 문서/비공개 notes marker 없음. |
-| Git | 기존 작업은 baseline에 보존, 이번 migration 원격 Commit/Push/배포 미수행 |
+| Git / CI | 기존 작업 보존, 162개 파일 SHA 검증 후 force 없이 main 반영. CI 설치/12 tests/93장/37 alias/build 4.51초/산출물 검사/Deploy 모두 PASS |
 
 중간 Font probe에서 KaTeX wrapper는 직접 glyph가 없어 빈 배열을 반환했습니다. 실제 glyph leaf를 검사해 KaTeX_Math가 유지됨을 확인했습니다. CSS 내부 SVG의 xmlns 문자열도 외부 요청이 아니므로 URL/@import 검사와 실제 network 기록을 기준으로 검증했습니다. 검증 규칙이나 기존 계산 테스트를 삭제하지 않았습니다.
 
-결과 파일: `output/warm-validation.json`, `output/playwright/warm-audit-verified.json`, `output/warm-font-assets.json`, `output/warm-preservation.json`, `output/warm-svg-preservation.json`, `output/warm-final-review.json`.
+결과 파일: 배포 전 로컬 검증은 `output/warm-validation.json`, `output/playwright/warm-audit-verified.json`, `output/warm-font-assets.json`, `output/warm-preservation.json`, `output/warm-svg-preservation.json`, `output/warm-final-review.json`입니다. 실제 배포 결과는 `output/warm-theme-deployment.json`, `output/warm-ci-build.log`, `output/warm-ci-deploy.log`입니다.
 실제 CLI helper는 `output/playwright/warm-{audit,behavior,stages,navigation,access,font-coverage}.cjs`에 있습니다. 새 checkout에는 ignored output이 없을 수 있으므로 [browser-qa.md](browser-qa.md)를 참고하세요.
 
 ## E. 남은 항목과 다음 단계
 
 - 확인된 로컬 기능·시각 오류는 없습니다. 실제 교실 프로젝터의 대비·글꼴·장비 검증은 아직 수행하지 않았습니다.
 - Build의 PLUGIN_TIMINGS는 기존 플러그인 실행 시간 안내입니다. PowerShell 로그의 NativeCommandError 표기는 stderr 안내를 감싼 것이며, build는 5.47초에 성공했습니다. 의존성이나 빌드 구조는 변경하지 않았습니다.
-- GitHub Pages의 **Warm 버전**은 아직 배포하지 않았습니다. 기존 배포 성공을 이번 migration의 성공으로 재사용하지 않습니다.
-- 사용자가 이번 변경의 원격 반영을 별도로 승인하면, 기준 이후 다른 변경을 비교한 뒤 테마 변경만 반영하고 새 Actions/Pages를 검증해야 합니다. 외부 URL UI는 이 환경의 네트워크 제한이 재발할 수 있습니다.
+- GitHub Pages의 **Warm 버전**은 이번 migration의 새 Run에서 배포 성공을 확인했습니다. Deploy job 128668846300의 실제 success 시각은 2026-11-08T07:53:29.3522614Z입니다.
+- 남은 검증은 네트워크가 허용된 일반 브라우저에서 공개 사이트 UI/폰트/실습을 확인하는 것입니다. Playwright의 ERR_NETWORK_ACCESS_DENIED와 web 도구 접근 실패로 이 환경에서는 수행하지 못했습니다.
+- deploy-pages@v4는 Node 20 대상 action을 runner가 Node 24로 실행했다는 비차단 경고를 남겼습니다. 배포는 성공했으며 이번 테마 작업에서 기존 workflow를 변경하지 않았습니다.
 - `.git`은 기존 쓰기 제한 때문에 initial HEAD에 남아 있습니다. 로컬 dirty 전체를 테마 변경으로 오해해 stage/reset/Push하지 마세요. 기준 snapshot은 `output/warm-theme-baseline/manifest.json`입니다.
